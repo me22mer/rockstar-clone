@@ -2,11 +2,11 @@ type Props = {
   className?: string;
 };
 
-export default function ArrowRightIcon ({ className }: Props) {
+export default function ArrowRightIcon({ className }: Props) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className={`transition-all duration-300 ${className}`}
+      className={`w-8 h-8 ${className}`}
       viewBox="0 0 24 24"
       fill="none"
     >

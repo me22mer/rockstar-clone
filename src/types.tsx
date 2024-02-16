@@ -2,7 +2,7 @@ export type MenuNavItem = {
     title: string;
     path: string;
     icon?: JSX.Element;
-    imgSrc?: string;
+    ImgSrc?: string;
     submenu?: boolean;
     subMenuItems?: MenuNavItem[];
 }

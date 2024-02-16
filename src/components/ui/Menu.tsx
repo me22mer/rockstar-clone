@@ -12,13 +12,13 @@ export default function Menu() {
   return (
     <div className="flex">
       {MenuItems.map((item, idx) => {
-        return <MenuItem key={idx} item={item} />;
+        return <MenuProp key={idx} item={item} />;
       })}
     </div>
   );
 }
 
-function MenuItem({ item }: { item: MenuNavItem }) {
+function MenuProp({ item }: { item: MenuNavItem }) {
   const router = useRouter();
   const pathname = usePathname();
   const [subMenuOpen, setSubMenuOpen] = useState(false);
@@ -37,7 +37,7 @@ function MenuItem({ item }: { item: MenuNavItem }) {
             onClick={toggleSubMenu}
           >
             {item.title}
-            <span className={`${subMenuOpen ? "rotate-180" : ""}`}>
+            <span className={`transition-all duration-300 ${subMenuOpen ? "rotate-180" : ""}`}>
               {item.icon}
             </span>
             {subMenuOpen && (
@@ -48,7 +48,7 @@ function MenuItem({ item }: { item: MenuNavItem }) {
               ></span>
             )}
           </Button>
-          {subMenuOpen && item.title === "Games" ? <Featured /> : ""}
+          {subMenuOpen && item.title === "Games" && <Featured />}
         </>
       ) : (
         <Button

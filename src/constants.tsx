@@ -5,58 +5,64 @@ import { MenuNavItem } from "./types";
 export const MenuItems: MenuNavItem[] = [
   {
     title: "Games",
-    path: "/",
+    path: "",
     icon: <ArrowChevonDownIcon />,
     submenu: true,
     subMenuItems: [
       {
         title: "Grand Theft Auto V",
-        path: "/",
-        imgSrc: "images/header/V.jpg",
+        path: "",
+        ImgSrc: "/images/header/GTAV.jpg",
       },
       {
         title: "Grand Theft Auto Online",
-        path: "/",
-        imgSrc: "images/header/GTAOnline.jpg",
+        path: "",
+        ImgSrc: "/images/header/GTAOnline.jpg",
       },
       {
         title: "Grand Theft Auto Trilogy",
-        path: "/",
-        imgSrc: "images/header/GTATrilogy.jpg",
+        path: "",
+        ImgSrc: "/images/header/GTATrilogy.jpg",
       },
       {
         title: "Red Dead Redemption 2",
-        path: "/",
-        imgSrc: "images/header/reddeadredemption2",
+        path: "",
+        ImgSrc: "/images/header/RDR2.jpg",
       },
       {
         title: "Red Dead Redemption Online",
-        path: "/",
-        imgSrc: "images/header/reddeadonline.jpg",
+        path: "",
+        ImgSrc: "/images/header/RDROnline.jpg",
       },
     ],
   },
   {
     title: "Newswire",
     path: "/Newswire",
+    submenu: false,
+
   },
   {
     title: "Videos",
     path: "/Videos",
+    submenu: false,
   },
   {
     title: "Downloads",
     path: "/Downloads",
+    submenu: false,
   },
   {
     title: "Store",
-    path: "www.store.rockstargames.com",
+    path: "",
     icon: <NewtabIcon />,
+    submenu: false,
   },
   {
     title: "Support",
-    path: "/Support",
+    path: "",
     icon: <NewtabIcon />,
+    submenu: false,
   },
   {
     title: "More",
