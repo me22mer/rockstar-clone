@@ -1,6 +1,6 @@
 export default function GlobalIcon() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="" fill="none">
+    <svg xmlns="http://www.w3.org/2000/svg"  className="" fill="none">
       <path
         stroke="#fff"
         strokeLinecap="round"

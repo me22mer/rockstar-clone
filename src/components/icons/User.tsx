@@ -1,11 +1,10 @@
 export default function UserIcon() {
   return (
     <svg
-      width="30"
-      height="30"
       viewBox="0 0 44 44"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className="h-8 w-8"
     >
       <rect width="44" height="44" rx="22" fill="white" fillOpacity="0.15" />
       <path

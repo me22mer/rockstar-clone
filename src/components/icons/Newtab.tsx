@@ -1,8 +1,6 @@
 export default function NewtabIcon() {
   return (
     <svg
-      width="13"
-      height="12"
       className="w-4 h-4"
       viewBox="0 0 13 12"
       fill="none"

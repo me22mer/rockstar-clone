@@ -1,9 +1,12 @@
-export default function Logo() {
+type Props = {
+  className?: string;
+};
+
+
+export default function Logo({ className }: Props) {
   return (
     <svg
-      width="30"
-      height="30"
-      className="w-9 h-9 mt-2.5"
+      className={`h-9 w-9 ${className}`}
       viewBox="0 0 30 30"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
