@@ -1,13 +1,14 @@
 import Link from "next/link";
-import ArrowRightIcon from "../icons/ArrowRight";
 import Image from "next/image";
 import { MenuItems } from "@/constants";
+import Motion from "../common/Motion";
+import ArrowRightIcon from "../icons/ArrowRight";
 
 export default function Featured() {
   const gamesMenuItems = MenuItems[0];
 
   return (
-    <div className="absolute w-full left-0 top-[5rem]">
+    <Motion className="absolute w-full left-0 top-[5rem]">
       <div className="py-16 bg-[#121212] ">
         <div className="px-20 mb-5 flex justify-between ">
           <h1 className="text-3xl font-semibold">Featured Games</h1>
@@ -43,6 +44,6 @@ export default function Featured() {
           </div>
         </div>
       </div>
-    </div>
+    </Motion>
   );
 }

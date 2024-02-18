@@ -40,7 +40,6 @@ export const MenuItems: MenuNavItem[] = [
     title: "Newswire",
     path: "/Newswire",
     submenu: false,
-
   },
   {
     title: "Videos",
@@ -73,10 +72,12 @@ export const MenuItems: MenuNavItem[] = [
       {
         title: "Store",
         path: "/Store",
+        icon: <NewtabIcon />,
       },
       {
         title: "Support",
         path: "/Support",
+        icon: <NewtabIcon />,
       },
     ],
   },
