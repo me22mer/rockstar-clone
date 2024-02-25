@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { MenuNavItem } from "@/types";
 import { MenuItems } from "@/constants";
 
-import Button from "../Button/Button";
+import Button from "../../Button/Button";
 import Featured from "./Featured";
 import More from "./More";
 
@@ -39,13 +39,17 @@ const MenuProp = ({ item }: { item: MenuNavItem }) => {
   };
 
   return (
-    <div>
+    <div className="max-lg:hidden">
       {item.submenu ? (
         <>
           <Button
             variant="Menu"
             size="sm"
-            className={`${subMenuOpen ? "text-white" : ""}`}
+            className={cn(
+              `group ${subMenuOpen ? "text-white" : ""}`,
+
+              { "xl:hidden flex": item.title === "More" }
+            )}
             onClick={toggleSubMenu}
           >
             {item.title}
@@ -56,13 +60,14 @@ const MenuProp = ({ item }: { item: MenuNavItem }) => {
             >
               {item.icon}
             </span>
-            {subMenuOpen && (
-              <span
-                className={cn(
-                  "absolute bottom-0 left-0 w-full h-1 bg-transparent border-b-2 border-transparent border-zinc-200 duration-300"
-                )}
-              ></span>
-            )}
+            <span
+              className={cn(
+                "absolute bottom-0 left-0 w-full h-1 bg-transparent border-b-2 group-hover:border-zinc-200 border-transparent duration-300",
+                {
+                  "border-zinc-200": isActive(item.path),
+                }
+              )}
+            ></span>
           </Button>
           {subMenuOpen && item.title === "Games" ? <Featured /> : null}
           {subMenuOpen && item.title === "More" ? <More /> : null}
@@ -71,7 +76,11 @@ const MenuProp = ({ item }: { item: MenuNavItem }) => {
         <Button
           variant="Menu"
           size="sm"
-          className={`group ${isActive(item.path) ? "text-white " : ""}`}
+          className={cn(
+            `group ${isActive(item.path) ? "text-white " : ""}`,
+            { "xl:flex hidden": item.title === "Store" },
+            { "xl:flex hidden": item.title === "Support" }
+          )}
           onClick={() => handleClick(item.path)}
         >
           {item.title}

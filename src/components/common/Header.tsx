@@ -1,13 +1,13 @@
 import Logo from "../icons/Logo";
-import Account from "../ui/Account";
-import Launcher from "../ui/Launcher";
-import Menu from "../ui/Menu";
-import Search from "../ui/Search";
+import Account from "../ui/navbar/Account";
+import Launcher from "../ui/navbar/Launcher";
+import Menu from "../ui/navbar/Menu";
+import Search from "../ui/navbar/Search";
 
 export default function Header() {
   return (
-    <nav className="w-full h-[80px] px-20 border-b border-b-zinc-800">
-      <div className="flex justify-between items-center">
+    <nav className="w-full h-[80px] px-20 border-b border-b-zinc-800 ">
+      <div className="h-full flex justify-between items-center">
         <Logo Href="/" className="flex items-center xl:basis-1/6" />
         <Menu />
 
