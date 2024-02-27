@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import { motion, useCycle } from "framer-motion";
 
 import { cn } from "@/lib/utils";
 import { MenuNavItem } from "@/types";
@@ -11,24 +11,20 @@ import Button from "../../Button/Button";
 import Featured from "./Featured";
 import More from "./More";
 
-export default function Menu() {
-  return (
-    <div className="flex">
-      {MenuItems.map((item, idx) => {
-        return <MenuProp key={idx} item={item} />;
-      })}
-    </div>
-  );
-}
+const variants = {
+  open: {
+    opacity: 1,
+    display: "block",
+    transition: { duration: 0.5, ease: "easeInOut" },
+  },
+  closed: { opacity: 0, transitionEnd: { display: "none" } },
+};
 
 const MenuProp = ({ item }: { item: MenuNavItem }) => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const [subMenuOpen, setSubMenuOpen] = useState(false);
-  const toggleSubMenu = () => {
-    setSubMenuOpen(!subMenuOpen);
-  };
+  const [subMenuOpen, setSubMenuOpen] = useCycle(false, true);
 
   const handleClick = (path: string) => {
     router.push(path, { scroll: false });
@@ -50,7 +46,7 @@ const MenuProp = ({ item }: { item: MenuNavItem }) => {
 
               { "xl:hidden flex": item.title === "More" }
             )}
-            onClick={toggleSubMenu}
+            onClick={() => setSubMenuOpen()}
           >
             {item.title}
             <span
@@ -69,8 +65,14 @@ const MenuProp = ({ item }: { item: MenuNavItem }) => {
               )}
             ></span>
           </Button>
-          {subMenuOpen && item.title === "Games" ? <Featured /> : null}
-          {subMenuOpen && item.title === "More" ? <More /> : null}
+          <motion.div
+            initial={false}
+            animate={subMenuOpen && item.title ? "open" : "closed"}
+            variants={variants}
+          >
+            {item.title === "Games" && <Featured />}
+            {item.title === "More" && <More />}
+          </motion.div>
         </>
       ) : (
         <Button
@@ -98,3 +100,13 @@ const MenuProp = ({ item }: { item: MenuNavItem }) => {
     </div>
   );
 };
+
+export default function Menu() {
+  return (
+    <div className="flex">
+      {MenuItems.map((item, idx) => {
+        return <MenuProp key={idx} item={item} />;
+      })}
+    </div>
+  );
+}
