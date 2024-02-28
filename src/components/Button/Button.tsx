@@ -6,11 +6,14 @@ const buttonVariants = cva(["duration-150 transition-all"], {
     variant: {
       default: ["text-white"],
       Menu: ["px-5 py-8 relative flex gap-1.5 text-zinc-200 font-medium group hover:text-white"],
-      launcher: ["px-3.5 py-2 rounded-[4px] text-black  font-bold bg-[#fcaf17]"],
+      Search: [" text-white font-semibold hover:bg-zinc-500  rounded-full bg-zinc-700 transition duration-150"],
+      Launcher: ["px-3.5 py-2 rounded-[4px] text-black  font-bold bg-[#fcaf17]"],
     },
     size: {
       sm: ["text-sm"],
       md: ["text-base"],
+      lg: ["text-lg"],
+      xl: ["text-xl"]
     },
   },
   defaultVariants: {

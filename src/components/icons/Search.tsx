@@ -6,7 +6,7 @@ export default function SearchIcon({ className }: Props) {
   return (
     <svg
       viewBox="0 0 30 30"
-      className={`${className} h-6 w-6`}
+      className={`${className}`}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >

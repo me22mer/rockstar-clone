@@ -9,7 +9,7 @@ export default function Logo({ Href, className }: Props) {
   return (
     <Link href={Href} className={`${className}`}>
       <svg
-        className={`h-9 w-9`}
+        className={`h-9 w-9 ${className}`}
         viewBox="0 0 30 30"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

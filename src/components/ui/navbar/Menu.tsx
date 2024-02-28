@@ -11,7 +11,7 @@ import Button from "../../Button/Button";
 import Featured from "./Featured";
 import More from "./More";
 
-const variants = {
+export const variants = {
   open: {
     opacity: 1,
     display: "block",
