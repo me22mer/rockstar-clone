@@ -2,7 +2,7 @@ import Logo from "../icons/Logo";
 import Account from "../ui/navbar/Account";
 import Launcher from "../ui/navbar/Launcher";
 import Menu from "../ui/navbar/Menu";
-import Filter from "../ui/navbar/Filter";
+import Search from "../ui/navbar/Search";
 
 export default function Header() {
   return (
@@ -13,7 +13,7 @@ export default function Header() {
 
         <div className="flex gap-7 items-center">
           <Launcher />
-          <Filter />
+          <Search />
           <Account />
         </div>
       </div>
