@@ -49,7 +49,7 @@ const MenuProp = ({ item }: { item: MenuNavItem }) => {
             onClick={() => setSubMenuOpen()}
           >
             {item.title}
-            <span className={` ${subMenuOpen ? "rotate-180" : ""}`}>
+            <span className={`tarnsition-all duration-300 ${subMenuOpen ? "rotate-180" : ""}`}>
               {item.icon}
             </span>
             <span

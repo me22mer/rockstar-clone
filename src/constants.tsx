@@ -6,7 +6,7 @@ export const MenuItems: MenuNavItem[] = [
   {
     title: "Games",
     path: "",
-    icon: <ArrowChevonDownIcon />,
+    icon: <ArrowChevonDownIcon className="fill-white" />,
     submenu: true,
     subMenuItems: [
       {
