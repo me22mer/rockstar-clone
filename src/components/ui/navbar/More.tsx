@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { MenuItems } from "@/constants";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/cn";
 
 export default function More() {
   const moreMenuItem = MenuItems[6];

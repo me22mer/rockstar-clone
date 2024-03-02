@@ -1,15 +1,17 @@
 "use client";
 
+import { useRef, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { motion, useCycle } from "framer-motion";
+import { motion } from "framer-motion";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/cn";
 import { MenuNavItem } from "@/types";
 import { MenuItems } from "@/constants";
 
 import Button from "../../Button/Button";
 import Featured from "./Featured";
 import More from "./More";
+import useAutoClose from "@/utils/useAutoClose";
 
 export const variants = {
   open: {
@@ -23,8 +25,9 @@ export const variants = {
 const MenuProp = ({ item }: { item: MenuNavItem }) => {
   const router = useRouter();
   const pathname = usePathname();
+  const FeaturedRef = useRef<HTMLDivElement>(null);
 
-  const [subMenuOpen, setSubMenuOpen] = useCycle(false, true);
+  const [subMenuOpen, setSubMenuOpen] = useState(false);
 
   const handleClick = (path: string) => {
     router.push(path, { scroll: false });
@@ -33,6 +36,12 @@ const MenuProp = ({ item }: { item: MenuNavItem }) => {
   const isActive = (path: string) => {
     return pathname === path;
   };
+
+  useAutoClose({
+    isOpen: subMenuOpen,
+    setIsOpen: setSubMenuOpen,
+    targetRef: FeaturedRef,
+  });
 
   return (
     <div className="max-lg:hidden">
@@ -46,10 +55,14 @@ const MenuProp = ({ item }: { item: MenuNavItem }) => {
 
               { "xl:hidden flex": item.title === "More" }
             )}
-            onClick={() => setSubMenuOpen()}
+            onClick={() => setSubMenuOpen(!subMenuOpen)}
           >
             {item.title}
-            <span className={`tarnsition-all duration-300 ${subMenuOpen ? "rotate-180" : ""}`}>
+            <span
+              className={`tarnsition-all duration-300 ${
+                subMenuOpen ? "rotate-180" : ""
+              }`}
+            >
               {item.icon}
             </span>
             <span
@@ -66,7 +79,7 @@ const MenuProp = ({ item }: { item: MenuNavItem }) => {
             animate={subMenuOpen && item.title ? "open" : "closed"}
             variants={variants}
           >
-            {item.title === "Games" && <Featured />}
+            {item.title === "Games" && <Featured FeaturedRef={FeaturedRef} />}
             {item.title === "More" && <More />}
           </motion.div>
         </>

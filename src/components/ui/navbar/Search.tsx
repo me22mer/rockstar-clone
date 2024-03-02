@@ -1,17 +1,19 @@
 "use client";
 import { motion } from "framer-motion";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useCallback } from "react";
 
 import Button from "../../Button/Button";
 import SearchIcon from "../../icons/Search";
 import ArrowChevonDownIcon from "@/components/icons/ArrowChevonDown";
 import CloseIcon from "@/components/icons/Close";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/cn";
 import { variants } from "./Menu";
+import useAutoClose from "@/utils/useAutoClose";
 
 export default function Search() {
-  const Ref = useRef<HTMLDivElement>(null);
+  const SearchRef = useRef<HTMLDivElement>(null);
+  const DropdownRef = useRef<HTMLDivElement>(null);
 
   const [open, setOpen] = useState(false);
   const [dropdown, setDropdown] = useState(false);
@@ -22,13 +24,10 @@ export default function Search() {
   const [active, setActive] = useState<String | null>(null);
   const [subactive, setSubActive] = useState(false);
 
-  const [Text, setText] = useState("Community");
+  const [updateValue, setUpdateValue] = useState("Community");
 
   const handleFilter = (
-    e:
-      | React.KeyboardEvent<HTMLButtonElement>
-      | React.KeyboardEvent<HTMLInputElement>
-  ) => {
+    e: | React.KeyboardEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLInputElement> ) => {
     if (e.key === "Enter" || e.key === "NumpadEnter") {
       console.log({
         search,
@@ -37,32 +36,29 @@ export default function Search() {
     }
   };
 
-  const handleActive = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setActive(e.currentTarget.value);
+  const handleActive = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    const categoryValue = e.currentTarget.value;
+    setActive(categoryValue);
     setSubActive(false);
-  };
+  }, []);
 
-  const handleCategoryClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setText(e.currentTarget.value);
-    setCategory(e.currentTarget.value);
-    setSubActive(true);
-    setText("Community");
-  };
+  const handleCategoryClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+      const categoryValue = e.currentTarget.value;
+      setUpdateValue(categoryValue);
+      setSubActive(true);
+    },[]);
 
-  useEffect(() => {
-    const handleAutoClose = (e: MouseEvent) => {
-      if (open && !Ref.current?.contains(e.target as Node)) {
-        setOpen(false);
-        setDropdown(false);
-      }
-      setDropdown(false);
-    };
-    document.addEventListener("click", handleAutoClose);
+  useAutoClose({
+    isOpen: open,
+    setIsOpen: setOpen,
+    targetRef: SearchRef,
+  });
 
-    return () => {
-      document.removeEventListener("click", handleAutoClose);
-    };
-  }, [Ref, open, dropdown]);
+  useAutoClose({
+    isOpen: dropdown,
+    setIsOpen: setDropdown,
+    targetRef: DropdownRef,
+  });
 
   const categories = ["Games", "Posts", "Videos"];
   const Subcategories = [
@@ -79,13 +75,12 @@ export default function Search() {
         <SearchIcon className="w-6 h-6" />
       </Button>
       <motion.div
-        ref={Ref}
+        ref={SearchRef}
         initial={false}
         animate={open ? "open" : "closed"}
         variants={variants}
         className={cn(
-          `absolute w-full left-0 top-[5rem] shadow-lg bg-zinc-800`,
-          
+          `absolute w-full left-0 top-[5rem] shadow-lg bg-zinc-800`
         )}
       >
         <div className={cn("px-20 py-6")}>
@@ -105,7 +100,7 @@ export default function Search() {
                 onChange={(e) => setSearch(e.target.value)}
                 onKeyDown={handleFilter}
                 className={cn(
-                  "w-full bg-transparent  text-3xl font-semibold focus:outline-none placeholder:text-white tracking-tight"
+                  "w-full bg-transparent text-3xl font-semibold focus:outline-none placeholder:text-white tracking-tight"
                 )}
               />
             </div>
@@ -133,7 +128,7 @@ export default function Search() {
                 </Button>
               ))}
               <Button
-                value={Text}
+                value={updateValue}
                 variant="Filter"
                 size="xl"
                 className={cn(
@@ -148,7 +143,7 @@ export default function Search() {
                 }}
                 onKeyDown={handleFilter}
               >
-                {Text}
+                {updateValue}
                 <ArrowChevonDownIcon
                   className={cn(
                     "fill-white duration-300 transition-all",
@@ -161,7 +156,7 @@ export default function Search() {
                 />
               </Button>
               <motion.div
-                ref={Ref}
+                ref={DropdownRef}
                 initial={false}
                 animate={dropdown ? "open" : "closed"}
                 variants={variants}
@@ -177,7 +172,7 @@ export default function Search() {
                       onClick={(e) => {
                         handleCategoryClick(e);
                         setCategory(e.currentTarget.value);
-                        setText(e.currentTarget.value);
+                        setUpdateValue(e.currentTarget.value);
                       }}
                       onKeyDown={handleFilter}
                       className="w-full text-start p-5 hover:bg-zinc-800 focus:text-black focus:bg-white"

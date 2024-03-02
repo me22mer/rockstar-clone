@@ -1,5 +1,5 @@
 import { VariantProps, cva } from "class-variance-authority";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/cn";
 
 const buttonVariants = cva(["duration-150 transition-all"], {
   variants: {

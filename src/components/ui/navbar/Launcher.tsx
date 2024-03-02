@@ -8,7 +8,6 @@ export default function Launcher() {
 
   return (
     <Button
-      type="button"
       variant="Launcher"
       size="sm"
       onClick={() => router.push("", { scroll: false })}
