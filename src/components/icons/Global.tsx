@@ -1,6 +1,10 @@
-export default function GlobalIcon() {
+type Props = {
+  className?: string;
+};
+
+export default function GlobalIcon({ className }: Props) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg"  className="" fill="none">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" className={`${className}`}>
       <path
         stroke="#fff"
         strokeLinecap="round"

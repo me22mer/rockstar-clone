@@ -1,7 +1,9 @@
 "use client";
 
-import Button from "../../Button/Button";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
+
+const Button = dynamic(() => import("../../Button/Button"));
 
 export default function Launcher() {
   const router = useRouter();

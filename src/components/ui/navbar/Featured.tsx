@@ -1,21 +1,15 @@
 import Link from "next/link";
 import Image from "next/image";
+
 import { MenuItems } from "@/constants";
-import ArrowRightIcon from "../../icons/ArrowRight";
 import { cn } from "@/lib/cn";
+import ArrowRightIcon from "../../icons/ArrowRight";
 
-type Props = {
-  FeaturedRef: any;
-}
-
-export default function Featured({FeaturedRef}: Props) {
+export default function Featured() {
   const gamesMenuItems = MenuItems[0];
 
   return (
-    <div
-      ref={FeaturedRef}
-      className={cn(`absolute w-full left-0 top-[5rem] bg-[#121212]`)}
-    >
+    <div className={cn(`absolute w-full left-0 top-[5rem] bg-[#121212]`)}>
       <div className="flex justify-center">
         <div className="py-16 px-20">
           <div className="mb-5 flex justify-between ">

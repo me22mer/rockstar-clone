@@ -1,15 +1,13 @@
 "use client";
-import { motion } from "framer-motion";
 import { useState, useRef, useCallback } from "react";
 
 import Button from "../../Button/Button";
 import SearchIcon from "../../icons/Search";
 import ArrowChevonDownIcon from "@/components/icons/ArrowChevonDown";
 import CloseIcon from "@/components/icons/Close";
+import Motion from "@/components/common/Motion";
 
 import { cn } from "@/lib/cn";
-import { variants } from "./Menu";
-import useAutoClose from "@/utils/useAutoClose";
 
 export default function Search() {
   const SearchRef = useRef<HTMLDivElement>(null);
@@ -26,15 +24,21 @@ export default function Search() {
 
   const [updateValue, setUpdateValue] = useState("Community");
 
-  const handleFilter = (
-    e: | React.KeyboardEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLInputElement> ) => {
-    if (e.key === "Enter" || e.key === "NumpadEnter") {
-      console.log({
-        search,
-        category,
-      });
-    }
-  };
+  const handleFilter = useCallback(
+    (
+      e:
+        | React.KeyboardEvent<HTMLButtonElement>
+        | React.KeyboardEvent<HTMLInputElement>
+    ) => {
+      if (e.key === "Enter" || e.key === "NumpadEnter") {
+        console.log({
+          search,
+          category,
+        });
+      }
+    },
+    [search, category]
+  );
 
   const handleActive = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
     const categoryValue = e.currentTarget.value;
@@ -42,23 +46,12 @@ export default function Search() {
     setSubActive(false);
   }, []);
 
-  const handleCategoryClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-      const categoryValue = e.currentTarget.value;
-      setUpdateValue(categoryValue);
-      setSubActive(true);
-    },[]);
-
-  useAutoClose({
-    isOpen: open,
-    setIsOpen: setOpen,
-    targetRef: SearchRef,
-  });
-
-  useAutoClose({
-    isOpen: dropdown,
-    setIsOpen: setDropdown,
-    targetRef: DropdownRef,
-  });
+  const handleClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    const categoryValue = e.currentTarget.value;
+    setUpdateValue(categoryValue);
+    setDropdown(false);
+    setSubActive(true);
+  }, []);
 
   const categories = ["Games", "Posts", "Videos"];
   const Subcategories = [
@@ -74,14 +67,16 @@ export default function Search() {
       <Button onClick={() => setOpen(!open)}>
         <SearchIcon className="w-6 h-6" />
       </Button>
-      <motion.div
-        ref={SearchRef}
-        initial={false}
-        animate={open ? "open" : "closed"}
-        variants={variants}
-        className={cn(
-          `absolute w-full left-0 top-[5rem] shadow-lg bg-zinc-800`
-        )}
+      <Motion
+        isOpen={open}
+        setIsOpen={[
+          setOpen,
+          setSubActive,
+          setDropdown,
+          () => setUpdateValue("Community"),
+        ]}
+        targetRef={SearchRef}
+        className="absolute w-full left-0 top-[5rem] shadow-lg bg-zinc-800"
       >
         <div className={cn("px-20 py-6")}>
           <div
@@ -155,14 +150,11 @@ export default function Search() {
                   )}
                 />
               </Button>
-              <motion.div
-                ref={DropdownRef}
-                initial={false}
-                animate={dropdown ? "open" : "closed"}
-                variants={variants}
-                className={cn(
-                  "absolute right-24 top-20 w-[240px] shadow-lg border border-zinc-800 rounded-lg bg-[#121212]"
-                )}
+              <Motion
+                isOpen={dropdown}
+                setIsOpen={[setDropdown]}
+                targetRef={DropdownRef}
+                className="absolute right-24 top-20 w-[240px] shadow-lg border border-zinc-800 rounded-lg bg-[#121212]"
               >
                 <div className="divide-y divide-zinc-800">
                   {Subcategories.map((category, index) => (
@@ -170,7 +162,7 @@ export default function Search() {
                       key={index}
                       value={category}
                       onClick={(e) => {
-                        handleCategoryClick(e);
+                        handleClick(e);
                         setCategory(e.currentTarget.value);
                         setUpdateValue(e.currentTarget.value);
                       }}
@@ -181,7 +173,7 @@ export default function Search() {
                     </Button>
                   ))}
                 </div>
-              </motion.div>
+              </Motion>
             </div>
             <div className="ml-10">
               <Button onClick={() => setOpen(!open)}>
@@ -191,7 +183,7 @@ export default function Search() {
             </div>
           </div>
         </div>
-      </motion.div>
+      </Motion>
     </div>
   );
 }

@@ -1,8 +1,10 @@
-import Logo from "../icons/Logo";
-import Account from "../ui/navbar/Account";
-import Launcher from "../ui/navbar/Launcher";
-import Menu from "../ui/navbar/Menu";
-import Search from "../ui/navbar/Search";
+import dynamic from "next/dynamic";
+
+const Logo = dynamic(() => import("../icons/Logo"));
+const Account = dynamic(() => import("../ui/navbar/Account"));
+const Launcher = dynamic(() => import("../ui/navbar/Launcher"));
+const Menu = dynamic(() => import("../ui/navbar/Menu"));
+const Search = dynamic(() => import("../ui/navbar/Search"));
 
 export default function Header() {
   return (

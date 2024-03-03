@@ -2,25 +2,16 @@
 
 import { useRef, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
 
 import { cn } from "@/lib/cn";
 import { MenuNavItem } from "@/types";
 import { MenuItems } from "@/constants";
+import Motion from "@/components/common/Motion";
 
-import Button from "../../Button/Button";
-import Featured from "./Featured";
-import More from "./More";
-import useAutoClose from "@/utils/useAutoClose";
-
-export const variants = {
-  open: {
-    opacity: 1,
-    display: "block",
-    transition: { duration: 0.5, ease: "easeInOut" },
-  },
-  closed: { opacity: 0, transitionEnd: { display: "none" } },
-};
+const Button = dynamic(() => import("../../Button/Button"));
+const Featured = dynamic(() => import("./Featured"));
+const More = dynamic(() => import("./More"));
 
 const MenuProp = ({ item }: { item: MenuNavItem }) => {
   const router = useRouter();
@@ -36,12 +27,6 @@ const MenuProp = ({ item }: { item: MenuNavItem }) => {
   const isActive = (path: string) => {
     return pathname === path;
   };
-
-  useAutoClose({
-    isOpen: subMenuOpen,
-    setIsOpen: setSubMenuOpen,
-    targetRef: FeaturedRef,
-  });
 
   return (
     <div className="max-lg:hidden">
@@ -74,14 +59,16 @@ const MenuProp = ({ item }: { item: MenuNavItem }) => {
               )}
             ></span>
           </Button>
-          <motion.div
-            initial={false}
-            animate={subMenuOpen && item.title ? "open" : "closed"}
-            variants={variants}
+
+          <Motion
+            isOpen={subMenuOpen}
+            setIsOpen={[setSubMenuOpen]}
+            targetRef={FeaturedRef}
+            className=""
           >
-            {item.title === "Games" && <Featured FeaturedRef={FeaturedRef} />}
-            {item.title === "More" && <More />}
-          </motion.div>
+            {item.title === "Games" && <Featured />}
+          </Motion>
+          {item.title === "More" && <More />}
         </>
       ) : (
         <Button
