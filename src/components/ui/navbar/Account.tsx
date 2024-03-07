@@ -38,24 +38,47 @@ const submenuLinks = [
   },
 ];
 
+const lang = [
+  "Deutsch",
+  "English",
+  "Español",
+  "Español Latinoamérica",
+  "Français",
+  "Italiano",
+  "日本語",
+  "한국어",
+  "Polski",
+  "Português do Brasil",
+  "Русский",
+  "繁體中文",
+  "简体中文",
+];
+
 export default function Account() {
   const [open, setOpen] = useState(false);
-  const [subopen, setSubOpen] = useState(false);
+  const [helpopen, setHelpOpen] = useState(false);
+  const [langopen, setLangOpen] = useState(false);
 
   const AccountRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div>
+    <div className="static">
       <Button onClick={() => setOpen(!open)}>
         <UserIcon />
       </Button>
       <Motion
         isOpen={open}
-        setIsOpen={[setOpen, setSubOpen]}
+        setIsOpen={[setOpen, setHelpOpen, setLangOpen]}
         targetRef={AccountRef}
-        className={cn(`absolute w-[345px] top-[5.25rem] right-10  shadow-lg`)}
+        className={cn(`absolute w-[340px] top-[5rem] right-10 shadow-lg`, {
+          "h-full scrollbar scrollbar-thumb-zinc-800 scrollbar-track-zinc-950 overflow-y-scroll ": langopen,
+        })}
       >
-        <div className="flex flex-col divide-y text-sm divide-zinc-800 bg-[#121212] rounded-md border border-zinc-800">
+        <div
+          className={cn(
+            `flex flex-col divide-y text-sm divide-zinc-800 bg-[#121212] rounded-md border border-zinc-800`
+          )}
+        >
           <Link href="" className="p-5 hover:bg-zinc-800 rounded-t-md">
             Sign In
           </Link>
@@ -65,19 +88,19 @@ export default function Account() {
           <div className="flex flex-col">
             <button
               className="p-5 flex justify-between hover:bg-zinc-800 rounded-b-sm "
-              onClick={() => setSubOpen(!subopen)}
+              onClick={() => setHelpOpen(!helpopen)}
             >
               <span>Help</span>
               <span>
                 <ArrowChevonDownIcon
                   className={`fill-white transition-all duration-300 ${
-                    subopen ? "rotate-180 " : ""
+                    helpopen ? "rotate-180 " : ""
                   }`}
                 />
               </span>
             </button>
-            <Motion isOpen={subopen} setIsOpen={[]} className="">
-              <ul className="list-item pl-5 pr-2.5 pb-5 bg-[#121212]">
+            <Motion isOpen={helpopen} setIsOpen={[setHelpOpen]} className="">
+              <ul className="list-item px-5 bg-[#121212]">
                 {submenuLinks.map((link, index) => (
                   <li className="" key={index}>
                     <a
@@ -92,12 +115,34 @@ export default function Account() {
             </Motion>
           </div>
         </div>
-        <div className="mt-5 flex flex-col bg-[#121212] rounded-md border border-zinc-800">
-          <button className="p-5 flex justify-between hover:bg-zinc-800 rounded-sm ">
-            <span className="">
+        <div className="my-5 flex flex-col bg-[#121212] rounded-md border border-zinc-800">
+          <button
+            className="p-5 flex justify-between hover:bg-zinc-800 rounded-sm "
+            onClick={() => setLangOpen(!langopen)}
+          >
+            <div className="flex space-x-3">
               <GlobalIcon />
-            </span>
+              <p>Select a Language</p>
+            </div>
+            <div>
+              <ArrowChevonDownIcon
+                className={`fill-white transition-all duration-300 ${
+                  langopen ? "rotate-180 " : ""
+                }`}
+              />
+            </div>
           </button>
+          <Motion isOpen={langopen} setIsOpen={[]} className="">
+            <ul className="list-item bg-[#121212]">
+              {lang.map((lang, index) => (
+                <li className="" key={index}>
+                  <a href="" className="block text-base pl-14 py-3 hover:bg-zinc-800">
+                    {lang}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </Motion>
         </div>
       </Motion>
     </div>

@@ -16,7 +16,9 @@ const More = dynamic(() => import("./More"));
 const MenuProp = ({ item }: { item: MenuNavItem }) => {
   const router = useRouter();
   const pathname = usePathname();
+  
   const FeaturedRef = useRef<HTMLDivElement>(null);
+  const MoreRef = useRef<HTMLDivElement>(null);
 
   const [subMenuOpen, setSubMenuOpen] = useState(false);
 
@@ -68,7 +70,14 @@ const MenuProp = ({ item }: { item: MenuNavItem }) => {
           >
             {item.title === "Games" && <Featured />}
           </Motion>
-          {item.title === "More" && <More />}
+          <Motion
+            isOpen={subMenuOpen}
+            setIsOpen={[setSubMenuOpen]}
+            targetRef={MoreRef}
+            className=""
+          >
+            {item.title === "More" && <More />}
+          </Motion>
         </>
       ) : (
         <Button

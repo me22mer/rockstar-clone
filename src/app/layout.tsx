@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import dynamic from "next/dynamic";
+import { cn } from "@/lib/cn";
 
 const Header = dynamic(() => import("@/components/common/Header"));
 
@@ -19,7 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={cn(`${inter.className}`)}>
         <Header />
         {children}
       </body>

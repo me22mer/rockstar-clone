@@ -74,6 +74,7 @@ export default function Search() {
           setSubActive,
           setDropdown,
           () => setUpdateValue("Community"),
+          () => setSearch("")
         ]}
         targetRef={SearchRef}
         className="absolute w-full left-0 top-[5rem] shadow-lg bg-zinc-800"
@@ -154,7 +155,7 @@ export default function Search() {
                 isOpen={dropdown}
                 setIsOpen={[setDropdown]}
                 targetRef={DropdownRef}
-                className="absolute right-24 top-20 w-[240px] shadow-lg border border-zinc-800 rounded-lg bg-[#121212]"
+                className="absolute right-28 top-20 w-[240px] shadow-lg border border-zinc-800 rounded-lg bg-[#121212]"
               >
                 <div className="divide-y divide-zinc-800">
                   {Subcategories.map((category, index) => (

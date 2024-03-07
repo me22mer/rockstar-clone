@@ -28,7 +28,7 @@ const buttonVariants = cva(["duration-150 transition-all"], {
   },
 });
 
-type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
+type ButtonProps = React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants>;
 
 export default function Button({

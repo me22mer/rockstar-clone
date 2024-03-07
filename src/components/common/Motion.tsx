@@ -1,7 +1,10 @@
-import { motion } from "framer-motion";
+"use client"
+
+import { AnimatePresence, motion } from "framer-motion";
 
 import useAutoClose from "@/utils/useAutoClose";
 import { cn } from "@/lib/cn";
+import { useRouter } from 'next/navigation'
 
 type Props = {
   isOpen: boolean;
@@ -24,17 +27,26 @@ export default function Motion({
     targetRef: targetRef,
   });
 
+  const router = useRouter()
+
+
   return (
-    <motion.div
-      style={{ overflow: "hidden" }}
-      initial={{ height: 0, opacity: 0, display: "none" }}
-      animate={isOpen ? { height: "auto", opacity: 1 } : {}}
-      transition={{ duration: 0.5 }}
-      exit={{ height: 0, opacity: 0, display: "none" }}
-    >
-      <div ref={targetRef} className={cn(`${className}`)}>
-        {children}
-      </div>
-    </motion.div>
+    <AnimatePresence>
+      <motion.div
+        style={{ overflow: "hidden" }}
+        initial={{ height: 0, opacity: 0, display: "none" }}
+        animate={
+          isOpen
+            ? { height: "max-content", opacity: 1, display: "block" }
+            : { height: 0, opacity: 0, transitionEnd: { display: "none" } }
+        }
+        transition={{ duration: 0.5 }}
+        exit={{ height: 0, opacity: 0, display: "none" }}
+      >
+        <div ref={targetRef} className={cn(`${className} `)}>
+          {children}
+        </div>
+      </motion.div>
+    </AnimatePresence>
   );
 }
