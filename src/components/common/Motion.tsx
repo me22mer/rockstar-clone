@@ -1,17 +1,16 @@
-"use client"
+"use client";
 
 import { AnimatePresence, motion } from "framer-motion";
 
 import useAutoClose from "@/utils/useAutoClose";
 import { cn } from "@/lib/cn";
-import { useRouter } from 'next/navigation'
 
 type Props = {
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>[];
+  isOpen?: boolean;
+  setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>[];
   targetRef?: React.RefObject<HTMLDivElement>;
-  className: string;
-  children: React.ReactNode;
+  className?: string;
+  children?: React.ReactNode;
 };
 
 export default function Motion({
@@ -27,9 +26,6 @@ export default function Motion({
     targetRef: targetRef,
   });
 
-  const router = useRouter()
-
-
   return (
     <AnimatePresence>
       <motion.div
@@ -43,7 +39,7 @@ export default function Motion({
         transition={{ duration: 0.5 }}
         exit={{ height: 0, opacity: 0, display: "none" }}
       >
-        <div ref={targetRef} className={cn(`${className} `)}>
+        <div ref={targetRef} className={cn(className)}>
           {children}
         </div>
       </motion.div>

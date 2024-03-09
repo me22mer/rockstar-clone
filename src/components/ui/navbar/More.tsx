@@ -5,6 +5,7 @@ import { cn } from "@/lib/cn";
 
 export default function More() {
   const moreMenuItem = MenuItems[6];
+  
   return (
     <div className="absolute block xl:hidden w-[245px] shadow-lg">
       <ul className={cn(" bg-zinc-900 rounded-md divide-y divide-zinc-800")}>

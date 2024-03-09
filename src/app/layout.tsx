@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import dynamic from "next/dynamic";
 import { cn } from "@/lib/cn";
+import HeaderMobile from "@/components/common/Header-mobile";
 
 const Header = dynamic(() => import("@/components/common/Header"));
 
@@ -21,6 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(`${inter.className}`)}>
+        <HeaderMobile />
         <Header />
         {children}
       </body>

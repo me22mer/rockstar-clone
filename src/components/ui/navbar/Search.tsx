@@ -63,7 +63,7 @@ export default function Search() {
   ];
 
   return (
-    <div className="">
+    <div className="flex">
       <Button onClick={() => setOpen(!open)}>
         <SearchIcon className="w-6 h-6" />
       </Button>

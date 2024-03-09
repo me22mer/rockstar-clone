@@ -16,7 +16,7 @@ const More = dynamic(() => import("./More"));
 const MenuProp = ({ item }: { item: MenuNavItem }) => {
   const router = useRouter();
   const pathname = usePathname();
-  
+
   const FeaturedRef = useRef<HTMLDivElement>(null);
   const MoreRef = useRef<HTMLDivElement>(null);
 

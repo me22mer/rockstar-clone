@@ -62,7 +62,7 @@ export default function Account() {
   const AccountRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className="static">
+    <div className="static flex">
       <Button onClick={() => setOpen(!open)}>
         <UserIcon />
       </Button>

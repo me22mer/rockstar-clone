@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { cn } from "@/lib/cn";
 
 type Props = {
   className?: string;
@@ -7,9 +8,9 @@ type Props = {
 
 export default function Logo({ Href, className }: Props) {
   return (
-    <Link href={Href} className={`${className}`}>
+    <Link href={Href}>
       <svg
-        className={`h-9 w-9 ${className}`}
+        className={cn(`h-7 w-7 ${className}`)}
         viewBox="0 0 30 30"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
