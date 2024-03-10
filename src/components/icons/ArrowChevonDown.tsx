@@ -1,3 +1,5 @@
+import { cn } from "@/lib/cn";
+
 type Props = {
   className?: string;
 };
@@ -5,7 +7,7 @@ type Props = {
 export default function ArrowChevonDownIcon ({ className }: Props) {
   return (
     <svg
-      className={`w-5 h-5 ${className}`}
+      className={cn(`w-5 h-5`, className)}
       viewBox="0 0 13 12"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

@@ -37,6 +37,17 @@ export default function SearchMobile() {
     [search, category]
   );
 
+  const handleOpen = useCallback(() => {
+    setOpen(true);
+  }, []);
+
+  const handleClose = useCallback(() => {
+    setOpen(false);
+    setSubActive(false);
+    setDropdown(false);
+    setUpdateValue("Community"), setSearch("");
+  }, []);
+
   const handleActive = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
     const categoryValue = e.currentTarget.value;
     setActive(categoryValue);
@@ -50,16 +61,6 @@ export default function SearchMobile() {
     setSubActive(true);
   }, []);
 
-  const handleOpen = useCallback(() => {
-    setOpen(true);
-  }, []);
-
-  const handleClose = useCallback(() => {
-    setOpen(false);
-    setSubActive(false);
-    setDropdown(false);
-    setUpdateValue("Community"), setSearch("");
-  }, []);
 
   const categories = ["Games", "Posts", "Videos"];
   const Subcategories = [
@@ -71,7 +72,7 @@ export default function SearchMobile() {
   ];
 
   return (
-    <div className="absolute w-full left-0 top-[5rem]">
+    <div className={cn(`w-full`)}>
       <div className={cn("px-10 py-1.5 bg-zinc-800 ")}>
         <div
           className={cn("flex gap-3 items-center align-middle", {
@@ -88,6 +89,7 @@ export default function SearchMobile() {
                 placeholder="Search Rockstar Games..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
+                onClick={handleOpen}
                 onKeyDown={handleFilter}
                 className={cn(
                   "py-2.5 w-full bg-transparent text-xl font-normal focus:outline-[#fcaf17] placeholder:text-white tracking-tight"
@@ -104,7 +106,9 @@ export default function SearchMobile() {
       </div>
       <Motion
         isOpen={open}
-        className="px-8 max-sm:px-2 py-5 border-b border-b-zinc-800 "
+        className={cn(
+          "px-8 max-sm:px-2 py-5 border-b border-b-zinc-800 bg-black"
+        )}
       >
         <div className="flex shrink-0 space-x-3 overflow-x-auto scrollbar-none">
           {categories.map((categories, index) => (

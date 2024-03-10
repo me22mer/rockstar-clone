@@ -1,3 +1,5 @@
+import { cn } from "@/lib/cn";
+
 type Props = {
   className?: string;
 };
@@ -6,7 +8,7 @@ export default function ArrowRightIcon({ className }: Props) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className={`w-8 h-8 ${className}`}
+      className={cn(`w-8 h-8`, className)}
       viewBox="0 0 24 24"
       fill="none"
     >

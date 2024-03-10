@@ -8,21 +8,22 @@ interface UseAutoCloseProps {
 }
 
 const useAutoClose = ({ isOpen, setIsOpen, targetRef }: UseAutoCloseProps) => {
+  const handleAutoClose = (event: MouseEvent) => {
+    if (isOpen && !targetRef?.current?.contains(event.target as Node)) {
+      setIsOpen?.forEach((setState) => setState(false));
+    }
+  };
   useEffect(() => {
-    const handleAutoClose = (event: MouseEvent) => {
-      if (isOpen && !targetRef?.current?.contains(event.target as Node)) {
-        setIsOpen?.forEach(setState => setState(false));
-      }
-    };
-
     if (isOpen) {
       document.addEventListener("click", handleAutoClose);
+    } else {
+      document.removeEventListener("click", handleAutoClose);
     }
 
     return () => {
       document.removeEventListener("click", handleAutoClose);
     };
-  }, [isOpen, setIsOpen, targetRef]);
+  });
 };
 
 export default useAutoClose;
