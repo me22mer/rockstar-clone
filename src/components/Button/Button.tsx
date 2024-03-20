@@ -12,7 +12,7 @@ const buttonVariants = cva(["duration-150 transition-all"], {
         "text-white font-semibold rounded-full bg-zinc-700 transition duration-150",
       ],
       Launcher: [
-        "px-3.5 py-2 rounded-[4px] text-black  font-bold bg-[#fcaf17]",
+        "px-3.5 rounded-[4px] text-black  font-bold bg-[#fcaf17]",
       ],
     },
     size: {

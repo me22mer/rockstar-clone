@@ -10,6 +10,7 @@ export default function Launcher() {
 
   return (
     <Button
+      className="py-2"
       variant="Launcher"
       size="sm"
       onClick={() => router.push("", { scroll: false })}

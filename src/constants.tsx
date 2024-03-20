@@ -54,13 +54,13 @@ export const MenuItems: MenuNavItem[] = [
   {
     title: "Store",
     path: "",
-    icon: <NewtabIcon />,
+    icon: <NewtabIcon className="h-5 w-5" />,
     submenu: false,
   },
   {
     title: "Support",
     path: "",
-    icon: <NewtabIcon />,
+    icon: <NewtabIcon className="h-5 w-5" />,
     submenu: false,
   },
   {
@@ -72,12 +72,12 @@ export const MenuItems: MenuNavItem[] = [
       {
         title: "Store",
         path: "/Store",
-        icon: <NewtabIcon />,
+        icon: <NewtabIcon className="h-5 w-5"  />,
       },
       {
         title: "Support",
         path: "/Support",
-        icon: <NewtabIcon />,
+        icon: <NewtabIcon className="h-5 w-5"  />,
       },
     ],
   },

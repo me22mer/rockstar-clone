@@ -1,7 +1,13 @@
-export default function NewtabIcon() {
+import { cn } from "@/lib/cn";
+
+type Prop = {
+  className: string;
+};
+
+export default function NewtabIcon({ className }: Prop) {
   return (
     <svg
-      className="w-4 h-4"
+      className={cn("", className)}
       viewBox="0 0 13 12"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

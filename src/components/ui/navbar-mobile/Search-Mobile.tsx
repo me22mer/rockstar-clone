@@ -73,7 +73,7 @@ export default function SearchMobile() {
 
   return (
     <div className={cn(`w-full`)}>
-      <div className={cn("px-10 py-1.5 bg-zinc-800 ")}>
+      <div className={cn("px-8 md:px-10 py-1.5 bg-zinc-800 ")}>
         <div
           className={cn("flex gap-3 items-center align-middle", {
             "justify-between": open,
@@ -92,7 +92,7 @@ export default function SearchMobile() {
                 onClick={handleOpen}
                 onKeyDown={handleFilter}
                 className={cn(
-                  "py-2.5 w-full bg-transparent text-xl font-normal focus:outline-[#fcaf17] placeholder:text-white tracking-tight"
+                  "py-2 md:py-2.5 w-full bg-transparent text-md md:text-xl font-normal focus:outline-[#fcaf17] placeholder:text-white tracking-tight"
                 )}
               />
             </div>
@@ -110,7 +110,7 @@ export default function SearchMobile() {
           "px-8 max-sm:px-2 py-5 border-b border-b-zinc-800 bg-black"
         )}
       >
-        <div className="flex shrink-0 space-x-3 overflow-x-auto scrollbar-none">
+        <div className="flex shrink-0 px-[36px] space-x-3 overflow-x-auto scrollbar-none">
           {categories.map((categories, index) => (
             <Button
               key={index}

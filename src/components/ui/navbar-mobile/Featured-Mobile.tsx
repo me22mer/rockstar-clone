@@ -11,12 +11,14 @@ export default function FeaturedMobile() {
   return (
     <div className={cn(`w-full bg-black overflow-auto`)}>
       <div className="flex flex-col justify-center">
-        <div className="pt-8 pb-4 px-10">
+        <div className="pt-8 pb-4 px-8 md:px-10">
           <div className=" flex justify-between items-center">
-            <h1 className="text-2xl font-semibold">Games</h1>
+            <h1 className="text-white text-lg md:text-2xl font-semibold">
+              Games
+            </h1>
             <Link
               href=""
-              className="flex gap-2 items-center text-sm font-semibold"
+              className="flex gap-2 items-center text-xs md:text-sm font-semibold"
             >
               <span>VIEW ALL</span>
               <span>
@@ -26,14 +28,14 @@ export default function FeaturedMobile() {
           </div>
         </div>
         <div className="overflow-y-scroll scrollbar-none">
-          <div className="gap-3 w-max flex flex-row px-10">
+          <div className="gap-3 w-max flex flex-row px-8 md:px-10">
             {gamesMenuItems.subMenuItems?.map((subItem, idx) => (
               <div key={idx} className=" border border-zinc-700/50">
                 <Image
                   src={subItem.ImgSrc ? subItem.ImgSrc : ""}
                   width={220}
                   height={190}
-                  sizes="(max-width: 1024px) 80vw"
+                  sizes="(max-width: 1024px) 65vw, (max-width: 768px) 25vw,"
                   alt={subItem.title}
                   loading="lazy"
                   quality={90}
