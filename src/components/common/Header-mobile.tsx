@@ -46,7 +46,7 @@ export default function HeaderMobile() {
           <User />
         </div>
       </nav>
-      <Motion isOpen={open} setIsOpen={[]}  className="">
+      <Motion isOpen={open} className="">
         <SearchMobile />
         <FeaturedMobile />
         <NavbarMobile />
