@@ -30,19 +30,19 @@ export default function FeaturedMobile() {
         <div className="overflow-y-scroll scrollbar-none">
           <div className="gap-3 w-max flex flex-row px-8 md:px-10">
             {gamesMenuItems.subMenuItems?.map((subItem, idx) => (
-              <div key={idx} className=" border border-zinc-700/50">
+              <Link key={idx} href={subItem.path} className=" border border-zinc-700/50">
                 <Image
                   src={subItem.ImgSrc ? subItem.ImgSrc : ""}
                   width={220}
                   height={190}
-                  sizes="(max-width: 1024px) 65vw, (max-width: 768px) 25vw,"
+                  sizes="(max-width: 1024px) 65vw, (max-width: 768px) 20vw,"
                   alt={subItem.title}
                   loading="lazy"
                   quality={90}
                   style={{ objectFit: "contain" }}
                   className="w-full h-auto "
                 />
-              </div>
+              </Link>
             ))}
           </div>
         </div>

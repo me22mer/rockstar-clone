@@ -9,7 +9,7 @@ export default function LauncherMobile() {
   const router = useRouter();
 
   return (
-    <div className="w-full px-[32px] md:px-[36px]">
+    <div className="w-full px-[32px] pb-10 md:px-[36px]">
       <Button
         className="w-full p-4 text-md md:text-xl"
         variant="Launcher"

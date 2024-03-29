@@ -11,7 +11,7 @@ import GlobalIcon from "@/components/icons/Global";
 import ArrowChevonDownIcon from "@/components/icons/ArrowChevonDown";
 import Motion from "@/components/common/Motion";
 
-const submenuLinks = [
+export const submenuLinks = [
   {
     title: "Support",
     href: "",
@@ -38,7 +38,7 @@ const submenuLinks = [
   },
 ];
 
-const lang = [
+export const lang = [
   "Deutsch",
   "English",
   "Español",
@@ -54,12 +54,12 @@ const lang = [
   "简体中文",
 ];
 
-export default function Account() {
+export default function User() {
   const [open, setOpen] = useState(false);
   const [helpopen, setHelpOpen] = useState(false);
   const [langopen, setLangOpen] = useState(false);
 
-  const AccountRef = useRef<HTMLDivElement>(null);
+  const UserRef = useRef<HTMLDivElement>(null);
 
   return (
     <div className="static flex">
@@ -69,7 +69,7 @@ export default function Account() {
       <Motion
         isOpen={open}
         setIsOpen={[setOpen, setHelpOpen, setLangOpen]}
-        targetRef={AccountRef}
+        targetRef={UserRef}
         className={cn(`absolute w-[340px] top-[5rem] right-10 shadow-lg`, {
           "h-full scrollbar scrollbar-thumb-zinc-800 scrollbar-track-zinc-950 overflow-y-scroll ": langopen,
         })}

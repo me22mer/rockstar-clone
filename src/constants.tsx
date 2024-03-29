@@ -11,27 +11,27 @@ export const MenuItems: MenuNavItem[] = [
     subMenuItems: [
       {
         title: "Grand Theft Auto V",
-        path: "",
+        path: "#",
         ImgSrc: "/images/header/GTAV.jpg",
       },
       {
         title: "Grand Theft Auto Online",
-        path: "",
+        path: "#",
         ImgSrc: "/images/header/GTAOnline.jpg",
       },
       {
         title: "Grand Theft Auto Trilogy",
-        path: "",
+        path: "#",
         ImgSrc: "/images/header/GTATrilogy.jpg",
       },
       {
         title: "Red Dead Redemption 2",
-        path: "",
+        path: "#",
         ImgSrc: "/images/header/RDR2.jpg",
       },
       {
         title: "Red Dead Redemption Online",
-        path: "",
+        path: "#",
         ImgSrc: "/images/header/RDROnline.jpg",
       },
     ],
