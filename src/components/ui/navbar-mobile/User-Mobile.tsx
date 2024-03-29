@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import Button from "@/components/Button/Button";
 import Motion from "@/components/common/Motion";
@@ -16,6 +16,9 @@ export default function UserMobile() {
   const [open, setOpen] = useState(false);
   const [helpopen, setHelpOpen] = useState(false);
   const [langopen, setLangOpen] = useState(false);
+
+  const LangRef = useRef<HTMLDivElement>(null);
+  const HelpRef = useRef<HTMLDivElement>(null);
 
   return (
     <div className="static">
@@ -71,6 +74,7 @@ export default function UserMobile() {
                 <Motion
                   isOpen={helpopen}
                   setIsOpen={[setHelpOpen]}
+                  targetRef={HelpRef}
                   className=""
                 >
                   <ul className="list-item px-5 bg-[#121212]">
@@ -89,25 +93,27 @@ export default function UserMobile() {
               </div>
             </div>
             <div className="relative my-5 h-max flex flex-col bg-[#121212] rounded-md border border-zinc-800">
-              {langopen ? (
-                <div className="absolute bottom-0 w-full mb-10 bg-[#121212] rounded-lg z-50">
+              <Motion
+                isOpen={langopen}
+                targetRef={LangRef}
+                className="absolute bottom-0 w-full mb-10 bg-[#121212] rounded-lg z-50"
+              >
+                <option
+                  disabled
+                  defaultValue=""
+                  className="text-sm pl-4 py-1 text-white bg-sky-800 rounded-t-lg"
+                >
+                  Select a Language
+                </option>
+                {lang.map((lang, index) => (
                   <option
-                    disabled
-                    defaultValue=""
-                    className="text-sm pl-4 py-1 text-white bg-sky-800 rounded-t-lg"
+                    key={index}
+                    className="text-sm pl-4 py-1.5 hover:bg-zinc-800"
                   >
-                    Select a Language
+                    {lang}
                   </option>
-                  {lang.map((lang, index) => (
-                    <option
-                      key={index}
-                      className="text-sm pl-4 py-1.5 hover:bg-zinc-800"
-                    >
-                      {lang}
-                    </option>
-                  ))}
-                </div>
-              ) : null}
+                ))}
+              </Motion>
               <button
                 className="py-2.5 px-5 flex justify-between hover:bg-zinc-800 rounded-sm "
                 onClick={() => setLangOpen(!langopen)}

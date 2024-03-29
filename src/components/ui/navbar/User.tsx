@@ -70,8 +70,8 @@ export default function User() {
         isOpen={open}
         setIsOpen={[setOpen, setHelpOpen, setLangOpen]}
         targetRef={UserRef}
-        className={cn(`absolute w-[340px] top-[5rem] right-10 shadow-lg`, {
-          "h-full scrollbar scrollbar-thumb-zinc-800 scrollbar-track-zinc-950 overflow-y-scroll ": langopen,
+        className={cn(`absolute w-[340px] top-[5rem] right-10 shadow-lg overflow-auto`, {
+          " scrollbar scrollbar-thumb-zinc-800 scrollbar-track-zinc-950 overflow-y-scroll ": langopen,
         })}
       >
         <div
