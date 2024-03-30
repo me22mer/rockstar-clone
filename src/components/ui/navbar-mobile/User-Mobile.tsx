@@ -28,11 +28,11 @@ export default function UserMobile() {
       <Motion
         isOpen={open}
         setIsOpen={[setOpen, setHelpOpen, setLangOpen]}
-        className="fixed w-screen h-screen left-0 top-0"
+        className="absolute w-screen h-screen left-0 top-0"
       >
         <div
           className={cn(
-            `absolute bottom-0 w-full h-[250px] bg-zinc-700 backdrop-blur-lg rounded-t-lg`,
+            `sticky bottom-0 w-full h-[250px] bg-zinc-700 backdrop-blur-lg rounded-t-lg`,
             { "h-max": helpopen },
             { "h-auto": !helpopen }
           )}
