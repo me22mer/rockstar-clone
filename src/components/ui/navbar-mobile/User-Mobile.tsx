@@ -97,8 +97,8 @@ export default function UserMobile() {
                     className="absolute bottom-0 w-full h-auto mb-10 bg-[#121212] rounded-lg z-50"
                   >
                     <option
-                      disabled
-                      defaultValue=""
+                      // disabled
+                      // defaultValue=""
                       className="text-sm pl-4 py-1 text-white  bg-sky-800 rounded-t-lg"
                     >
                       Select a Language
