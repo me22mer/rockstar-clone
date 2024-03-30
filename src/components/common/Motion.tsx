@@ -36,7 +36,7 @@ export default function Motion({
             ? { height: "max-content", opacity: 1, display: "block" }
             : { height: 0, opacity: 0, transitionEnd: { display: "none" } }
         }
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
         exit={{ height: 0, opacity: 0, display: "none" }}
       >
         <div ref={targetRef} className={cn(className)}>
