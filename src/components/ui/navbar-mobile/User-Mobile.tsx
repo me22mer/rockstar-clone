@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRef, useState } from "react";
 
 import Button from "@/components/Button/Button";
@@ -7,39 +8,47 @@ import Motion from "@/components/common/Motion";
 import DragMenuIcon from "@/components/icons/DragMenu";
 import UserIcon from "@/components/icons/User";
 import ArrowChevonDownIcon from "@/components/icons/ArrowChevonDown";
-import GlobalIcon from "@/components/icons/Global";
-import Link from "next/link";
+
 import { cn } from "@/lib/cn";
 import { lang, submenuLinks } from "../navbar/User";
 
 export default function UserMobile() {
   const [open, setOpen] = useState(false);
+  const [useropen, setUserOpen] = useState(false);
   const [helpopen, setHelpOpen] = useState(false);
-  const [langopen, setLangOpen] = useState(false);
+  const [langopen, setLangOpen] = useState(true);
 
   const UserRef = useRef<HTMLDivElement>(null);
   const LangRef = useRef<HTMLDivElement>(null);
   const HelpRef = useRef<HTMLDivElement>(null);
 
+  const toggleStates = () => {
+    setOpen((prevOpen) => !prevOpen);
+    setUserOpen((prevUserOpen) => !prevUserOpen);
+  };
+
   return (
     <div className="static flex">
-      <Button onClick={() => setOpen(!open)}>
+      <Button onClick={toggleStates}>
         <UserIcon />
       </Button>
       <Motion
         isOpen={open}
-        setIsOpen={[setOpen, setHelpOpen, setLangOpen]}
+        setIsOpen={[setHelpOpen]}
         className={cn(`absolute w-screen h-screen left-0 top-0 `)}
       >
         <div className="relative w-full h-full">
-          <div
+          <Motion
+            isOpen={useropen}
+            setIsOpen={[setOpen, setUserOpen]}
+            targetRef={UserRef}
             className={cn(
               `absolute bottom-0 w-full h-[250px] bg-zinc-700 shadow-lg rounded-t-lg`,
               { "h-max": helpopen },
               { "h-auto": !helpopen }
             )}
           >
-            <div ref={UserRef} className={cn(`sticky bottom-0`)}>
+            <div className={cn(`sticky bottom-0`)}>
               <div className="px-3.5 pb-3.5 w-full h-full ">
                 <div className="flex justify-center h-[2rem]">
                   <Button onClick={() => setOpen(!open)}>
@@ -90,47 +99,27 @@ export default function UserMobile() {
                     </Motion>
                   </div>
                 </div>
-                <div className="relative my-5 h-max flex flex-col bg-[#121212] rounded-md border border-zinc-800">
-                  {langopen ? (
-                    <div className="absolute bottom-0 w-full h-auto mb-10 bg-[#121212] rounded-lg z-50">
-                      <option
-                        disabled
-                        defaultValue=""
-                        className="text-sm pl-4 py-1 text-white  bg-sky-800 rounded-t-lg"
-                      >
-                        Select a Language
-                      </option>
-                      {lang.map((lang, index) => (
-                        <option
-                          key={index}
-                          className="pl-4 py-1.5 w-full h-full text-white text-sm bg-[#121212] hover:bg-zinc-800"
-                        >
-                          {lang}
-                        </option>
-                      ))}
-                    </div>
-                  ) : null}
 
-                  <button
-                    className="py-2.5 px-5 flex justify-between hover:bg-zinc-800 rounded-sm "
-                    onClick={() => setLangOpen(!langopen)}
-                  >
-                    <div className="flex space-x-3">
-                      <GlobalIcon />
-                      <p>Select a Language</p>
-                    </div>
-                    <div>
-                      <ArrowChevonDownIcon
-                        className={`fill-white transition-all duration-300 ${
-                          langopen ? "rotate-180 " : ""
-                        }`}
-                      />
-                    </div>
-                  </button>
-                </div>
+                <Motion
+                  isOpen={langopen}
+                  targetRef={LangRef}
+                  className="relative my-5  h-max flex gap-2 items-center bg-[#121212] rounded-md border border-zinc-800"
+                >
+                  <select className="text-sm py-2.5 px-5  w-full text-white bg-[#121212]">
+                    <option value="none">Select a language</option>
+                    {lang.map((lang, index) => (
+                      <option
+                        key={index}
+                        className="pl-4 py-1.5 w-full h-full text-white text-sm bg-[#121212] hover:bg-zinc-800"
+                      >
+                        {lang}
+                      </option>
+                    ))}
+                  </select>
+                </Motion>
               </div>
             </div>
-          </div>
+          </Motion>
         </div>
       </Motion>
     </div>
