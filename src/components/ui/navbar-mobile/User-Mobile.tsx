@@ -32,15 +32,14 @@ export default function UserMobile() {
         className={cn(`absolute w-screen h-screen left-0 top-0 `)}
       >
         <div className="relative w-full h-full">
-          <div className="absolute bottom-0 w-full h-[250px] bg-zinc-700 shadow-lg rounded-t-lg">
-            <div
-              ref={UserRef}
-              className={cn(
-                `sticky bottom-0`,
-                { "h-max": helpopen },
-                { "h-auto": !helpopen }
-              )}
-            >
+          <div
+            className={cn(
+              `absolute bottom-0 w-full h-[250px] bg-zinc-700 shadow-lg rounded-t-lg`,
+              { "h-max": helpopen },
+              { "h-auto": !helpopen }
+            )}
+          >
+            <div ref={UserRef} className={cn(`sticky bottom-0`)}>
               <div className="px-3.5 pb-3.5 w-full h-full ">
                 <div className="flex justify-center h-[2rem]">
                   <Button onClick={() => setOpen(!open)}>
