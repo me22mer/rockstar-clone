@@ -9,7 +9,7 @@ export default function FeaturedMobile() {
   const gamesMenuItems = MenuItems[0];
 
   return (
-    <div className={cn(`w-full bg-black overflow-auto`)}>
+    <div className={cn(`w-full overflow-auto`)}>
       <div className="flex flex-col justify-center">
         <div className="pt-8 pb-4 px-8 md:px-10">
           <div className=" flex justify-between items-center">

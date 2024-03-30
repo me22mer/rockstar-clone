@@ -49,7 +49,7 @@ export default function HeaderMobile() {
           <UserMobile />
         </div>
       </nav>
-      <Motion isOpen={open} className="">
+      <Motion isOpen={open} className="bg-black">
         <SearchMobile />
         <FeaturedMobile />
         <NavbarMobile />

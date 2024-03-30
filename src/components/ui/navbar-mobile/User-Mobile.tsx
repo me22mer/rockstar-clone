@@ -28,11 +28,11 @@ export default function UserMobile() {
       <Motion
         isOpen={open}
         setIsOpen={[setOpen, setHelpOpen, setLangOpen]}
-        className="absolute w-screen h-screen left-0 top-0"
+        className="fixed w-screen h-screen left-0 top-0"
       >
         <div
           className={cn(
-            `absolute bottom-0 w-full h-[250px] bg-zinc-500/30 backdrop-blur-lg rounded-t-lg`,
+            `absolute bottom-0 w-full h-[250px] bg-zinc-700 backdrop-blur-lg rounded-t-lg`,
             { "h-max": helpopen },
             { "h-auto": !helpopen }
           )}
@@ -45,7 +45,7 @@ export default function UserMobile() {
             </div>
             <div
               className={cn(
-                `flex flex-col divide-y text-sm divide-zinc-800 bg-[#121212] rounded-md border border-zinc-800`
+                `flex flex-col divide-y text-sm text-white divide-zinc-800 bg-[#121212] rounded-md border border-zinc-800`
               )}
             >
               <Link
