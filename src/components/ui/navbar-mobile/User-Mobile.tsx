@@ -91,27 +91,26 @@ export default function UserMobile() {
                   </div>
                 </div>
                 <div className="relative my-5 h-max flex flex-col bg-[#121212] rounded-md border border-zinc-800">
-                  <Motion
-                    isOpen={langopen}
-                    targetRef={LangRef}
-                    className="absolute bottom-0 w-full h-auto mb-10 bg-[#121212] rounded-lg z-50"
-                  >
-                    <option
-                      // disabled
-                      // defaultValue=""
-                      className="text-sm pl-4 py-1 text-white  bg-sky-800 rounded-t-lg"
-                    >
-                      Select a Language
-                    </option>
-                    {lang.map((lang, index) => (
+                  {langopen ? (
+                    <div className="absolute bottom-0 w-full h-auto mb-10 bg-[#121212] rounded-lg z-50">
                       <option
-                        key={index}
-                        className="pl-4 py-1.5 w-full h-full text-white text-sm bg-[#121212] hover:bg-zinc-800"
+                        disabled
+                        defaultValue=""
+                        className="text-sm pl-4 py-1 text-white  bg-sky-800 rounded-t-lg"
                       >
-                        {lang}
+                        Select a Language
                       </option>
-                    ))}
-                  </Motion>
+                      {lang.map((lang, index) => (
+                        <option
+                          key={index}
+                          className="pl-4 py-1.5 w-full h-full text-white text-sm bg-[#121212] hover:bg-zinc-800"
+                        >
+                          {lang}
+                        </option>
+                      ))}
+                    </div>
+                  ) : null}
+
                   <button
                     className="py-2.5 px-5 flex justify-between hover:bg-zinc-800 rounded-sm "
                     onClick={() => setLangOpen(!langopen)}
