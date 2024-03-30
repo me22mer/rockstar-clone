@@ -51,7 +51,7 @@ export default function UserMobile() {
             <div className={cn(`sticky bottom-0`)}>
               <div className="px-3.5 pb-3.5 w-full h-full ">
                 <div className="flex justify-center h-[2rem]">
-                  <Button onClick={() => setOpen(!open)}>
+                  <Button onClick={toggleStates}>
                     <DragMenuIcon />
                   </Button>
                 </div>
