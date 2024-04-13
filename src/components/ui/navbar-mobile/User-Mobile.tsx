@@ -35,7 +35,7 @@ export default function UserMobile() {
       <Motion
         isOpen={open}
         setIsOpen={[setHelpOpen]}
-        className={cn(`absolute w-screen h-screen left-0 top-0 `)}
+        className={cn(`absolute w-[100dvh] h-[100dvh] left-0 top-0 `)}
       >
         <div className="relative w-full h-full">
           <Motion
