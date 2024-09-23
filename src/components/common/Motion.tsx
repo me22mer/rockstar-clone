@@ -36,12 +36,12 @@ export default function Motion({
             ? { height: "max-content", opacity: 1, display: "block" }
             : { height: 0, opacity: 0, transitionEnd: { display: "none" } }
         }
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.3, delay: 0.1 }}
         exit={{ height: 0, opacity: 0, display: "none" }}
       >
-        <div ref={targetRef} className={cn(className)}>
+        <motion.div ref={targetRef} className={cn(className)}>
           {children}
-        </div>
+        </motion.div>
       </motion.div>
     </AnimatePresence>
   );

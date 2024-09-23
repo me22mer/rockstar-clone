@@ -74,7 +74,7 @@ export default function Search() {
           setSubActive,
           setDropdown,
           () => setUpdateValue("Community"),
-          () => setSearch("")
+          () => setSearch(""),
         ]}
         targetRef={SearchRef}
         className="absolute w-full left-0 top-[5rem] shadow-lg bg-zinc-800"

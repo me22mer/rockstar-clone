@@ -61,7 +61,6 @@ export default function SearchMobile() {
     setSubActive(true);
   }, []);
 
-
   const categories = ["Games", "Posts", "Videos"];
   const Subcategories = [
     "Users",
@@ -165,7 +164,7 @@ export default function SearchMobile() {
             <Motion
               isOpen={dropdown}
               setIsOpen={[setDropdown]}
-              className="absolute max-md:right-0  w-[240px] flex shadow-lg border border-zinc-800 rounded-lg "
+              className="absolute max-md:right-0  w-[240px] flex shadow-lg border border-zinc-800 rounded-lg z-50"
             >
               <div className=" bg-[#121212] divide-y divide-zinc-800">
                 {Subcategories.map((category, index) => (
