@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import dynamic from "next/dynamic";
 
 import SearchMobile from "../ui/navbar-mobile/Search-Mobile";
 import FeaturedMobile from "../ui/navbar-mobile/Featured-Mobile";
@@ -13,14 +12,14 @@ import Motion from "./Motion";
 import Button from "../Button/Button";
 
 import { cn } from "@/lib/cn";
+import Logo from "../icons/Logo";
 
-const Logo = dynamic(() => import("../icons/Logo"));
 
 export default function HeaderMobile() {
   const [open, isOpen] = useState(false);
 
   return (
-    <div className="lg:hidden ">
+    <div className="lg:hidden">
       <nav className="sticky top-0 w-full  px-8 md:px-10 border-b border-b-zinc-800 bg-black/95 backdrop-blur-lg">
         <div className="static py-6  flex justify-between items-center">
           <div className="">
@@ -49,11 +48,17 @@ export default function HeaderMobile() {
           <UserMobile />
         </div>
       </nav>
-      <Motion isOpen={open} className="bg-black">
-        <SearchMobile />
-        <FeaturedMobile />
-        <NavbarMobile />
-        <LauncherMobile />
+      <Motion
+        isOpen={open}
+        className="bg-black absolute top-[85px] z-50 container h-full "
+      >
+        <div className="">
+          {" "}
+          <SearchMobile />
+          <FeaturedMobile />
+          <NavbarMobile />
+          <LauncherMobile />
+        </div>
       </Motion>
     </div>
   );

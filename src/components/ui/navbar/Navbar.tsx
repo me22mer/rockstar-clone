@@ -33,7 +33,7 @@ const MenuProp = ({ item }: { item: MenuNavItem }) => {
   return (
     <div className="max-lg:hidden">
       {item.submenu ? (
-        <>
+        <div className="">
           <Button
             variant="Menu"
             size="sm"
@@ -78,7 +78,7 @@ const MenuProp = ({ item }: { item: MenuNavItem }) => {
           >
             {item.title === "More" && <More />}
           </Motion>
-        </>
+        </div>
       ) : (
         <Button
           variant="Menu"

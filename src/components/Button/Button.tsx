@@ -6,7 +6,7 @@ const buttonVariants = cva(["duration-150 transition-all"], {
     variant: {
       default: ["text-white"],
       Menu: [
-        "px-5 py-8 relative flex gap-1.5 text-zinc-200 font-medium group hover:text-white",
+        "px-5 pt-8 pb-[29px] relative flex gap-1.5 text-zinc-200 font-medium group hover:text-white",
       ],
       Filter: [
         "text-white font-semibold rounded-full bg-zinc-700 transition duration-150",

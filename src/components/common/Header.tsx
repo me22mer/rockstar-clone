@@ -1,14 +1,35 @@
-import dynamic from "next/dynamic";
+"use client"
 
-const Logo = dynamic(() => import("../icons/Logo"));
-const User = dynamic(() => import("../ui/navbar/User"));
-const Launcher = dynamic(() => import("../ui/navbar/Launcher"));
-const Navbar = dynamic(() => import("../ui/navbar/Navbar"));
-const Search = dynamic(() => import("../ui/navbar/Search"));
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import Logo from "../icons/Logo";
+import Navbar from "../ui/navbar/Navbar";
+import Launcher from "../ui/navbar/Launcher";
+import Search from "../ui/navbar/Search";
+import User from "../ui/navbar/User";
+
+
 
 export default function Header() {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 75);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <nav className="max-lg:hidden w-full h-[80px] px-20 border-b border-b-zinc-800 bg-black/95 backdrop-blur-lg">
+    <motion.nav
+      className="max-lg:hidden w-full sticky top-0 z-50 h-[80px] px-20 border-b border-b-zinc-800 bg-black/95 backdrop-blur-lg"
+      animate={{
+        y: isScrolled ? -80 : 0,
+        transition: { type: "tween", duration: 0.3 },
+      }}
+    >
       <div className="h-full flex justify-between items-center">
         <Logo Href="/" className="flex items-center xl:basis-1/6" />
         <Navbar />
@@ -19,6 +40,6 @@ export default function Header() {
           <User />
         </div>
       </div>
-    </nav>
+    </motion.nav>
   );
 }

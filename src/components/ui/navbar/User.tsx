@@ -70,9 +70,13 @@ export default function User() {
         isOpen={open}
         setIsOpen={[setOpen, setHelpOpen, setLangOpen]}
         targetRef={UserRef}
-        className={cn(`absolute w-[340px] top-[5rem] right-10 shadow-lg overflow-auto`, {
-          " scrollbar scrollbar-thumb-zinc-800 scrollbar-track-zinc-950 overflow-y-scroll ": langopen,
-        })}
+        className={cn(
+          `absolute w-[340px] top-[5rem] right-10 shadow-lg overflow-auto`,
+          {
+            " scrollbar scrollbar-thumb-zinc-800 scrollbar-track-zinc-950 overflow-y-scroll ":
+              langopen,
+          }
+        )}
       >
         <div
           className={cn(
@@ -136,7 +140,10 @@ export default function User() {
             <ul className="list-item bg-[#121212]">
               {lang.map((lang, index) => (
                 <li className="" key={index}>
-                  <a href="" className="block text-base pl-14 py-3 hover:bg-zinc-800">
+                  <a
+                    href=""
+                    className="block text-base pl-14 py-3 hover:bg-zinc-800"
+                  >
                     {lang}
                   </a>
                 </li>
