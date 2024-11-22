@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input"
 
 export function SiteFooter() {
   return (
-    <footer className="flex justify-center border-t border-white/10 bg-black">
+    <footer className="px-6 flex justify-center border-t border-white/10 bg-black">
       <div className="container max-w-screen-2xl py-12">
         <div className="mb-12 text-center">
           <img
@@ -20,7 +20,7 @@ export function SiteFooter() {
           <p className="mt-2 text-sm text-white/60">
             Sign up for news, updates, and exclusive offers.
           </p>
-          <form className="mx-auto mt-6 flex max-w-md gap-2">
+          <form className="mx-auto mt-6 flex md:flex-col max-w-md gap-2">
             <Input
               type="email"
               placeholder="Email Address"

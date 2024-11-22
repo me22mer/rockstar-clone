@@ -11,7 +11,7 @@ export function HeroSection() {
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent" />
       </div>
-      <div className="relative flex h-full items-center justify-center">
+      <div className="relative flex h-full items-end md:items-center justify-center">
         <div className="container max-w-screen-2xl">
           <div className="max-w-lg space-y-4 p-6">
             <h1 className="text-4xl font-bold text-white">Grand Theft Auto VI</h1>

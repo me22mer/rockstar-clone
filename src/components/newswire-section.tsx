@@ -51,7 +51,7 @@ const news = [
 
 export function NewswireSection() {
   return (
-    <section className="py-12">
+    <section className="py-12 px-6">
       <div className="container max-w-screen-2xl">
         <h2 className="mb-8 text-2xl font-bold text-white">Newswire</h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -80,7 +80,7 @@ export function NewswireSection() {
           ))}
         </div>
         <div className="mt-8 text-center">
-          <Button variant="outline" className="text-white border-white/20 hover:bg-white/10">
+          <Button variant="secondary" className="text-foreground border-white/20 hover:bg-background/80">
             View More
           </Button>
         </div>

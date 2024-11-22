@@ -27,8 +27,8 @@ const games = [
 
 export function FeaturedGames() {
   return (
-    <section className="py-12">
-      <div className="container w-screen">
+    <section className="py-12 px-6">
+      <div className="container max-w-screen-2xl">
         <h2 className="mb-8 text-2xl font-bold text-white">Featured Games</h2>
         <div className="mb-8">
           <div className="relative aspect-[21/9] overflow-hidden rounded-lg">
@@ -64,7 +64,7 @@ export function FeaturedGames() {
           ))}
         </div>
         <div className="mt-8 text-center">
-          <Button variant="outline" className="text-white border-white/20 hover:bg-white/10">
+          <Button variant="secondary" className="text-foreground border-white/20 hover:bg-background/80">
             View More
           </Button>
         </div>
