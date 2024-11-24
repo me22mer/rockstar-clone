@@ -1,10 +1,11 @@
 import { Button } from "@/components/ui/button"
+import Image from "next/image"
 
 export function HeroSection() {
   return (
     <section className="relative h-[70vh] min-h-[600px] w-full">
       <div className="absolute inset-0">
-        <img
+        <Image
           src="https://kzmp126vljbz1dw4wsx3.lite.vusercontent.net/placeholder.svg?height=1080&width=1920"
           alt="Grand Theft Auto VI"
           className="h-full w-full object-cover"

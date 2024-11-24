@@ -3,6 +3,7 @@ import { format } from "date-fns"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import Image from "next/image"
 
 const news = [
   {
@@ -59,7 +60,7 @@ export function NewswireSection() {
             <Card key={item.title} className="bg-zinc-900 border-zinc-800 overflow-hidden">
               <Link href={item.link} className="group">
                 <CardContent className="p-0">
-                  <img
+                  <Image
                     src={item.image}
                     alt={item.title}
                     className="aspect-square object-cover transition-transform group-hover:scale-105"

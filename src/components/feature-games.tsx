@@ -1,6 +1,7 @@
 import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
+import Image from "next/image"
 
 const games = [
   {
@@ -32,7 +33,7 @@ export function FeaturedGames() {
         <h2 className="mb-8 text-2xl font-bold text-white">Featured Games</h2>
         <div className="mb-8">
           <div className="relative aspect-[21/9] overflow-hidden rounded-lg">
-            <img
+            <Image
               src="https://kzmp126vljbz1dw4wsx3.lite.vusercontent.net/placeholder.svg?height=1080&width=1920"
               alt="Grand Theft Auto VI"
               className="h-full w-full object-cover"
@@ -51,7 +52,7 @@ export function FeaturedGames() {
               href={game.link}
               className="group relative aspect-square overflow-hidden rounded-lg"
             >
-              <img
+              <Image
                 src={game.image}
                 alt={game.title}
                 className="h-full w-full object-cover transition-transform group-hover:scale-105"
