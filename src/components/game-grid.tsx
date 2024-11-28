@@ -6,22 +6,22 @@ import { Card, CardContent } from "@/components/ui/card"
 const games = [
   {
     title: "Grand Theft Auto VI",
-    image: "/placeholder.svg?height=600&width=1200",
+    image: "",
     link: "#",
   },
   {
     title: "Red Dead Redemption 2",
-    image: "/placeholder.svg?height=600&width=1200",
+    image: "",
     link: "#",
   },
   {
     title: "Grand Theft Auto V",
-    image: "/placeholder.svg?height=600&width=1200",
+    image: "",
     link: "#",
   },
   {
     title: "Grand Theft Auto Online",
-    image: "/placeholder.svg?height=600&width=1200",
+    image: "",
     link: "#",
   },
 ]
