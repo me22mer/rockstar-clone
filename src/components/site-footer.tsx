@@ -3,14 +3,15 @@ import { Facebook, Instagram, Twitch, Twitter, Youtube } from 'lucide-react'
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import Image from "next/image"
 
 export function SiteFooter() {
   return (
     <footer className="px-6 flex justify-center border-t border-white/10 bg-black">
       <div className="container max-w-screen-2xl py-12">
         <div className="mb-12 text-center">
-          <img
-            src="/placeholder.svg?height=40&width=40"
+          <Image
+            src=""
             alt="Rockstar Games"
             className="mx-auto h-10 w-10"
           />

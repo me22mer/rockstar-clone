@@ -3,46 +3,47 @@ import { format } from "date-fns"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import Image from "next/image"
 
 const news = [
   {
     title: "Run Back the Classics with Bonuses on Original Heist Finales",
-    image: "https://kzmp126vljbz1dw4wsx3.lite.vusercontent.net/placeholder.svg?height=1080&width=1920",
+    image: "",
     date: new Date("2024-11-22"),
     category: "GTA Online",
     link: "#",
   },
   {
     title: "Prevent Doomsday for Double Rewards During Week 2 of The Heist Challenge",
-    image: "https://kzmp126vljbz1dw4wsx3.lite.vusercontent.net/placeholder.svg?height=1080&width=1920",
+    image: "",
     date: new Date("2024-11-21"),
     category: "GTA Online",
     link: "#",
   },
   {
     title: "CircoLoco Records Presents Prequel",
-    image: "https://kzmp126vljbz1dw4wsx3.lite.vusercontent.net/placeholder.svg?height=1080&width=1920",
+    image: "",
     date: new Date("2024-11-20"),
     category: "Featured Games",
     link: "#",
   },
   {
     title: "Get a Free Nagasaki Shinobi Motorcycle with GTA+",
-    image: "https://kzmp126vljbz1dw4wsx3.lite.vusercontent.net/placeholder.svg?height=1080&width=1920",
+    image: "",
     date: new Date("2024-11-19"),
     category: "GTA Online",
     link: "#",
   },
   {
     title: "Break into The Heist Challenge All Month Long",
-    image: "https://kzmp126vljbz1dw4wsx3.lite.vusercontent.net/placeholder.svg?height=1080&width=1920",
+    image: "",
     date: new Date("2024-11-18"),
     category: "GTA Online",
     link: "#",
   },
   {
     title: "Celebrate Thanksgiving Season in Red Dead Online with Trader Bonuses",
-    image: "https://kzmp126vljbz1dw4wsx3.lite.vusercontent.net/placeholder.svg?height=1080&width=1920",
+    image: "",
     date: new Date("2024-11-17"),
     category: "Red Dead Online",
     link: "#",
@@ -59,7 +60,7 @@ export function NewswireSection() {
             <Card key={item.title} className="bg-zinc-900 border-zinc-800 overflow-hidden">
               <Link href={item.link} className="group">
                 <CardContent className="p-0">
-                  <img
+                  <Image
                     src={item.image}
                     alt={item.title}
                     className="aspect-square object-cover transition-transform group-hover:scale-105"

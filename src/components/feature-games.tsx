@@ -1,39 +1,40 @@
 import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
+import Image from "next/image"
 
 const games = [
   {
     title: "Grand Theft Auto V",
-    image: "https://kzmp126vljbz1dw4wsx3.lite.vusercontent.net/placeholder.svg?height=1080&width=1920",
+    image: "",
     link: "#",
   },
   {
     title: "Grand Theft Auto Online",
-    image: "https://kzmp126vljbz1dw4wsx3.lite.vusercontent.net/placeholder.svg?height=1080&width=1920",
+    image: "",
     link: "#",
   },
   {
     title: "Red Dead Redemption II",
-    image: "https://kzmp126vljbz1dw4wsx3.lite.vusercontent.net/placeholder.svg?height=1080&width=1920",
+    image: "",
     link: "#",
   },
   {
     title: "Red Dead Redemption",
-    image: "https://kzmp126vljbz1dw4wsx3.lite.vusercontent.net/placeholder.svg?height=1080&width=1920",
+    image: "",
     link: "#",
   },
 ]
 
 export function FeaturedGames() {
   return (
-    <section className="py-12 px-6">
+    <section className="py-12 px-6 w-full flex justify-center">
       <div className="container max-w-screen-2xl">
         <h2 className="mb-8 text-2xl font-bold text-white">Featured Games</h2>
         <div className="mb-8">
           <div className="relative aspect-[21/9] overflow-hidden rounded-lg">
-            <img
-              src="https://kzmp126vljbz1dw4wsx3.lite.vusercontent.net/placeholder.svg?height=1080&width=1920"
+            <Image
+              src=""
               alt="Grand Theft Auto VI"
               className="h-full w-full object-cover"
             />
@@ -51,7 +52,7 @@ export function FeaturedGames() {
               href={game.link}
               className="group relative aspect-square overflow-hidden rounded-lg"
             >
-              <img
+              <Image
                 src={game.image}
                 alt={game.title}
                 className="h-full w-full object-cover transition-transform group-hover:scale-105"
