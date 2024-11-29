@@ -10,12 +10,14 @@ import {
 import { useState, useEffect } from "react";
 import { type CarouselApi } from "@/components/ui/carousel";
 import { cn } from "@/lib/cn";
+import { Link } from "next-view-transitions";
 
 const slides = [
   {
     title: "Grand Theft Auto VI",
     subtitle: "Trailer 1",
     image: "/images/hero/GTAVI.png",
+    video: "gta-vi-trailer",
   },
   {
     title: "Red Dead Redemption II",
@@ -50,7 +52,7 @@ export function HeroSection() {
 
   return (
     <section className="w-full">
-      <div className="relative w-full h-[50vh] sm:h-[60vh] md:h-[70vh] min-h-[400px] overflow-hidden">
+      <div className="relative w-full h-[30vh] sm:h-[60vh] md:h-[70vh] min-h-[400px] overflow-hidden">
         <Carousel setApi={setApi} className="w-full h-full">
           <CarouselContent className="h-full">
             {slides.map((slide, index) => (
@@ -78,9 +80,12 @@ export function HeroSection() {
               <p className="text-lg sm:text-xl text-white/90">
                 {slides[current].subtitle}
               </p>
-              <Button className="mt-4 bg-white text-black hover:bg-white/90 text-sm sm:text-base px-4 py-2 sm:px-6 sm:py-3">
-                WATCH NOW
-              </Button>
+              <Link href={`/videos/${slides[current].video}`}>
+                {" "}
+                <Button className="mt-4 w-[220px] h-16 bg-white text-black hover:bg-white/90 text-sm sm:text-base px-4 py-2 sm:px-6 sm:py-3">
+                  WATCH NOW
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -110,9 +115,12 @@ export function HeroSection() {
             </p>
           </div>
         </div>
-        <Button className="mt-8 h-14 w-full bg-white text-black hover:bg-white/90 text-sm sm:text-base px-4 py-2 sm:px-6 sm:py-3">
-          WATCH NOW
-        </Button>
+        <Link href={`/videos/${slides[current].video}`} className="w-full">
+          {" "}
+          <Button className="mt-4 h-14 w-full bg-white text-black hover:bg-white/90 text-sm sm:text-base px-4 py-2 sm:px-6 sm:py-3">
+            WATCH NOW
+          </Button>
+        </Link>
         <div className="mt-8 flex items-center gap-4 sm:gap-4">
           {slides.map((_, index) => (
             <button
