@@ -163,12 +163,9 @@ export function VideoPlayer({ src, title, className }: VideoPlayerProps) {
         className
       )}
     >
-      <video
-        ref={videoRef}
-        src={src}
-        className="w-full h-full"
-        onClick={togglePlay}
-      />
+      <video ref={videoRef} className="w-full h-full" preload="none" onClick={togglePlay}>
+        <source src={src} type="video/mp4" />
+      </video>
 
       <div
         className={cn(
