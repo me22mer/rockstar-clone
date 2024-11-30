@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import Image from "next/image";
 import { useMediaQuery } from "react-responsive";
 import { ChevronRight, Globe, Menu, Search, User } from "lucide-react";
@@ -146,22 +146,22 @@ export function SiteHeader() {
         </div>
         <div>
           <nav className="hidden lg:flex items-center space-x-10 text-base font-medium">
-            <Link href="#" className="text-white/70 hover:text-white">
+            <Link href="/" className="text-white/70 hover:text-white">
               Games
             </Link>
-            <Link href="#" className="text-white/70 hover:text-white">
+            <Link href="/" className="text-white/70 hover:text-white">
               Newswire
             </Link>
-            <Link href="#" className="text-white/70 hover:text-white">
+            <Link href="/videos" className="text-white/70 hover:text-white">
               Videos
             </Link>
-            <Link href="#" className="text-white/70 hover:text-white">
+            <Link href="/" className="text-white/70 hover:text-white">
               Downloads
             </Link>
-            <Link href="#" className="text-white/70 hover:text-white">
+            <Link href="/" className="text-white/70 hover:text-white">
               Store
             </Link>
-            <Link href="#" className="text-white/70 hover:text-white">
+            <Link href="/" className="text-white/70 hover:text-white">
               Support
             </Link>
           </nav>
@@ -291,22 +291,22 @@ export function SiteHeader() {
                 <DrawerTitle>Navigation</DrawerTitle>
               </DrawerHeader>
               <nav className="mx-4 flex flex-col space-y-4 p-4">
-                <Link href="#" className="text-lg hover:text-white/70">
+                <Link href="/" className="text-lg hover:text-white/70">
                   Games
                 </Link>
-                <Link href="#" className="text-lg hover:text-white/70">
+                <Link href="/" className="text-lg hover:text-white/70">
                   Newswire
                 </Link>
-                <Link href="#" className="text-lg hover:text-white/70">
+                <Link href="/videos" className="text-lg hover:text-white/70">
                   Videos
                 </Link>
-                <Link href="#" className="text-lg hover:text-white/70">
+                <Link href="/" className="text-lg hover:text-white/70">
                   Downloads
                 </Link>
-                <Link href="#" className="text-lg hover:text-white/70">
+                <Link href="/" className="text-lg hover:text-white/70">
                   Store
                 </Link>
-                <Link href="#" className="text-lg hover:text-white/70">
+                <Link href="/" className="text-lg hover:text-white/70">
                   Support
                 </Link>
               </nav>
