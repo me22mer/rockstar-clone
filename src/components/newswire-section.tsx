@@ -60,11 +60,11 @@ export function NewswireSection() {
             <Card key={item.title} className="bg-zinc-900 border-zinc-800 overflow-hidden">
               <Link href={item.link} className="group">
                 <CardContent className="p-0">
-                  <Image
+                  {/* <Image
                     src={item.image}
                     alt={item.title}
                     className="aspect-square object-cover transition-transform group-hover:scale-105"
-                  />
+                  /> */}
                   <div className="p-6">
                     <div className="mb-2 text-sm text-white/60">
                       <span>{item.category}</span>

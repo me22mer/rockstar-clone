@@ -10,11 +10,11 @@ export function SiteFooter() {
     <footer className="px-6 flex justify-center border-t border-white/10 bg-black">
       <div className="container max-w-screen-2xl py-12">
         <div className="mb-12 text-center">
-          <Image
+          {/* <Image
             src=""
             alt="Rockstar Games"
             className="mx-auto h-10 w-10"
-          />
+          /> */}
           <h2 className="mt-4 text-xl font-bold text-white">
             Subscribe to the Rockstar Games Email List
           </h2>

@@ -19,21 +19,7 @@ const slides = [
     image: "/images/hero/GTAVI.png",
     video: "gta-vi-trailer",
   },
-  {
-    title: "Red Dead Redemption II",
-    subtitle: "Out Now",
-    image: "",
-  },
-  {
-    title: "Grand Theft Auto Online",
-    subtitle: "Bottom Dollar Bounties",
-    image: "",
-  },
-  {
-    title: "Grand Theft Auto Online",
-    subtitle: "The Cluckin’ Bell Farm Raid",
-    image: "",
-  },
+ 
 ];
 
 export function HeroSection() {
