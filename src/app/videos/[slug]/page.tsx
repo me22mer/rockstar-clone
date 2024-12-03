@@ -34,14 +34,9 @@ export async function generateStaticParams() {
 export default function VideoPage({ params }: Params) {
   const video = videos[params.slug as keyof typeof videos];
 
-  if (!video) {
-    notFound();
-  }
-
   return (
     <div className="bg-zinc-950 text-white min-h-[100dvh]">
       <VideoPlayer
-        src={video.src}
         title={video.video_title}
         qualityOptions={video.qualityOptions}
       />{" "}

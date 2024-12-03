@@ -4,7 +4,6 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Play, Pause, Volume2, VolumeX, Maximize, Minimize, Repeat } from 'lucide-react';
 import { cn } from "@/lib/cn";
 import { Slider } from "@/components/ui/slider";
-import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -14,13 +13,12 @@ import {
 } from "@/components/ui/select"
 
 interface VideoPlayerProps {
-  src: string;
   className?: string;
   title: string;
   qualityOptions: { label: string; src: string }[];
 }
 
-export function VideoPlayer({ src, className, title, qualityOptions }: VideoPlayerProps) {
+export function VideoPlayer({ className, title, qualityOptions }: VideoPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -239,7 +237,7 @@ export function VideoPlayer({ src, className, title, qualityOptions }: VideoPlay
           className="absolute w-full h-full"
           onClick={togglePlay}
           playsInline
-          preload="metadata"
+          preload="auto"
         />
         <div
           className={cn(
@@ -253,7 +251,7 @@ export function VideoPlayer({ src, className, title, qualityOptions }: VideoPlay
           <div className="absolute inset-0 flex items-center justify-center">
             <button
               onClick={togglePlay}
-              className="bg-white/10 hover:bg-white/30 backdrop-blur-sm text-white rounded-full p-8 transition-colors"
+              className="bg-white/10 hover:bg-white/30 backdrop-blur-sm text-white rounded-full p-3 sm:p-8 transition-colors"
               aria-label={
                 isEnded
                   ? "Replay video"
@@ -316,7 +314,7 @@ export function VideoPlayer({ src, className, title, qualityOptions }: VideoPlay
                     max={1}
                     step={0.01}
                     onValueChange={(value) => handleVolumeChange(value[0])}
-                    className="w-24"
+                    className="w-24 hidden sm:flex"
                   />
                 </div>
                 <div className="text-white text-sm">
