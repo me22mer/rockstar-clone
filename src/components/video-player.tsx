@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import {
   Play,
   Pause,
@@ -14,12 +14,12 @@ import { cn } from "@/lib/cn";
 import { Slider } from "@/components/ui/slider";
 
 interface VideoPlayerProps {
-  title: string;
   src: string;
   className?: string;
+  title: string;
 }
 
-export function VideoPlayer({ src, title, className }: VideoPlayerProps) {
+export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -62,6 +62,9 @@ export function VideoPlayer({ src, title, className }: VideoPlayerProps) {
   }, []);
 
   useEffect(() => {
+    const player = playerRef.current;
+    if (!player) return;
+
     const handleMouseMove = () => {
       setShowControls(true);
       if (controlsTimeoutRef.current) {
@@ -79,32 +82,35 @@ export function VideoPlayer({ src, title, className }: VideoPlayerProps) {
       setShowControls(false);
     };
 
-    if (playerRef.current) {
-      playerRef.current.addEventListener("mousemove", handleMouseMove);
-      playerRef.current.addEventListener("mouseleave", handleMouseLeave);
-    }
+    player.addEventListener("mousemove", handleMouseMove);
+    player.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
-      if (playerRef.current) {
-        playerRef.current.removeEventListener("mousemove", handleMouseMove);
-        playerRef.current.removeEventListener("mouseleave", handleMouseLeave);
-      }
+      player.removeEventListener("mousemove", handleMouseMove);
+      player.removeEventListener("mouseleave", handleMouseLeave);
       if (controlsTimeoutRef.current) {
         clearTimeout(controlsTimeoutRef.current);
       }
     };
   }, []);
 
-  const togglePlay = () => {
+  const togglePlay = useCallback(() => {
     if (videoRef.current) {
       if (isPlaying) {
         videoRef.current.pause();
       } else {
-        videoRef.current.play();
+        const playPromise = videoRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise.catch((error) => {
+            // Auto-play was prevented
+            // Show a UI element to let the user manually start playback
+            console.error("Playback was prevented:", error);
+          });
+        }
       }
-      setIsPlaying(!isPlaying);
+      setIsPlaying((prev) => !prev);
     }
-  };
+  }, [isPlaying]);
 
   const toggleMute = () => {
     if (videoRef.current) {
@@ -155,6 +161,23 @@ export function VideoPlayer({ src, title, className }: VideoPlayerProps) {
     return `${minutes}:${seconds.toString().padStart(2, "0")}`;
   };
 
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handleTouchStart = () => {
+      if (!isPlaying) {
+        togglePlay();
+      }
+    };
+
+    video.addEventListener("touchstart", handleTouchStart);
+
+    return () => {
+      video.removeEventListener("touchstart", handleTouchStart);
+    };
+  }, [isPlaying, togglePlay]);
+
   return (
     <div
       ref={playerRef}
@@ -163,10 +186,13 @@ export function VideoPlayer({ src, title, className }: VideoPlayerProps) {
         className
       )}
     >
-      <video ref={videoRef} className="w-full h-full" preload="none" onClick={togglePlay}>
-        <source src={src} type="video/mp4" />
-      </video>
-
+      <video
+        ref={videoRef}
+        src={src}
+        className="w-full h-full"
+        onClick={togglePlay}
+        playsInline
+      />
       <div
         className={cn(
           "absolute inset-0 bg-gradient-to-t from-black/70 to-transparent transition-opacity duration-300",
@@ -185,6 +211,7 @@ export function VideoPlayer({ src, title, className }: VideoPlayerProps) {
             {isPlaying ? <Pause size={24} /> : <Play size={24} />}
           </button>
         </div>
+
         <div className="absolute bottom-0 left-0 right-0 px-4 pb-4">
           <div
             className="mb-3.5 h-1 bg-white/30 cursor-pointer"

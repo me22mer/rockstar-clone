@@ -33,13 +33,13 @@ export function GamesGrid() {
         <Card key={game.title} className="border-0 bg-transparent">
           <CardContent className="p-0">
             <Link href={game.link} className="group relative block">
-              <Image
+              {/* <Image
                 src={game.image}
                 alt={game.title}
                 width={1200}
                 height={600}
                 className="aspect-[2/1] object-cover transition-all hover:opacity-90"
-              />
+              /> */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               <div className="absolute bottom-4 left-4 text-white">
                 <h2 className="text-xl font-bold">{game.title}</h2>
