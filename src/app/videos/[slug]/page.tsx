@@ -1,7 +1,5 @@
-"use client";
-
-import { useParams } from "next/navigation";
 import { VideoPlayer } from "@/components/video-player";
+import { notFound } from "next/navigation";
 
 const videos = {
   "gta-vi-trailer": {
@@ -15,12 +13,23 @@ const videos = {
   },
 };
 
-export default function VideoPage() {
-  const { slug } = useParams();
-  const video = videos[slug as keyof typeof videos];
+type Params = {
+  params: {
+    slug: string;
+  };
+};
+
+export async function generateStaticParams() {
+  return Object.keys(videos).map((slug) => ({
+    slug: slug,
+  }));
+}
+
+export default function VideoPage({ params }: Params) {
+  const video = videos[params.slug as keyof typeof videos];
 
   if (!video) {
-    return <div>Video not found</div>;
+    notFound();
   }
 
   return (
