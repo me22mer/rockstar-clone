@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 const videos = {
   "gta-vi-trailer": {
     video_title: "Grand Theft Auto VI Trailer 1",
-    src: "/videos/GTAVI/Trailer-1-720p.mp4",
     game: "Grand Theft Auto VI",
     title: "Trailer 1",
     description:
