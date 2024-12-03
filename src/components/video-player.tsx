@@ -1,15 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import {
-  Play,
-  Pause,
-  Volume2,
-  VolumeX,
-  Maximize,
-  Minimize,
-  Settings,
-} from "lucide-react";
+import { Play, Pause, Volume2, VolumeX, Maximize, Minimize } from 'lucide-react';
 import { cn } from "@/lib/cn";
 import { Slider } from "@/components/ui/slider";
 
@@ -28,6 +20,7 @@ export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
   const [duration, setDuration] = useState<number | null>(null);
   const [currentTime, setCurrentTime] = useState(0);
   const [showControls, setShowControls] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const playerRef = useRef<HTMLDivElement>(null);
   const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -48,9 +41,14 @@ export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
       }
     };
 
+    const handleCanPlay = () => {
+      setIsLoaded(true);
+    };
+
     video.addEventListener("timeupdate", updateProgress);
     video.addEventListener("loadedmetadata", updateDuration);
     video.addEventListener("durationchange", updateDuration);
+    video.addEventListener("canplay", handleCanPlay);
 
     updateDuration();
 
@@ -58,6 +56,7 @@ export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
       video.removeEventListener("timeupdate", updateProgress);
       video.removeEventListener("loadedmetadata", updateDuration);
       video.removeEventListener("durationchange", updateDuration);
+      video.removeEventListener("canplay", handleCanPlay);
     };
   }, []);
 
@@ -102,8 +101,6 @@ export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
         const playPromise = videoRef.current.play();
         if (playPromise !== undefined) {
           playPromise.catch((error) => {
-            // Auto-play was prevented
-            // Show a UI element to let the user manually start playback
             console.error("Playback was prevented:", error);
           });
         }
@@ -166,9 +163,13 @@ export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
     if (!video) return;
 
     const handleTouchStart = () => {
-      if (!isPlaying) {
-        togglePlay();
+      setShowControls(true);
+      if (controlsTimeoutRef.current) {
+        clearTimeout(controlsTimeoutRef.current);
       }
+      controlsTimeoutRef.current = setTimeout(() => {
+        setShowControls(false);
+      }, 2500);
     };
 
     video.addEventListener("touchstart", handleTouchStart);
@@ -176,7 +177,7 @@ export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
     return () => {
       video.removeEventListener("touchstart", handleTouchStart);
     };
-  }, [isPlaying, togglePlay]);
+  }, []);
 
   return (
     <div
@@ -192,7 +193,13 @@ export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
         className="w-full h-full"
         onClick={togglePlay}
         playsInline
+        preload="metadata"
       />
+      {!isLoaded && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black">
+          <div className="text-white text-lg">Loading...</div>
+        </div>
+      )}
       <div
         className={cn(
           "absolute inset-0 bg-gradient-to-t from-black/70 to-transparent transition-opacity duration-300",
@@ -269,3 +276,4 @@ export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
     </div>
   );
 }
+
