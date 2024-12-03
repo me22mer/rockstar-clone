@@ -1,7 +1,15 @@
 "use client";
 
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { Play, Pause, Volume2, VolumeX, Maximize, Minimize } from 'lucide-react';
+import {
+  Play,
+  Pause,
+  Volume2,
+  VolumeX,
+  Maximize,
+  Minimize,
+  Repeat,
+} from "lucide-react";
 import { cn } from "@/lib/cn";
 import { Slider } from "@/components/ui/slider";
 
@@ -20,7 +28,7 @@ export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
   const [duration, setDuration] = useState<number | null>(null);
   const [currentTime, setCurrentTime] = useState(0);
   const [showControls, setShowControls] = useState(true);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isEnded, setIsEnded] = useState(false); // Added state for video end
   const videoRef = useRef<HTMLVideoElement>(null);
   const playerRef = useRef<HTMLDivElement>(null);
   const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -41,14 +49,9 @@ export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
       }
     };
 
-    const handleCanPlay = () => {
-      setIsLoaded(true);
-    };
-
     video.addEventListener("timeupdate", updateProgress);
     video.addEventListener("loadedmetadata", updateDuration);
     video.addEventListener("durationchange", updateDuration);
-    video.addEventListener("canplay", handleCanPlay);
 
     updateDuration();
 
@@ -56,7 +59,6 @@ export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
       video.removeEventListener("timeupdate", updateProgress);
       video.removeEventListener("loadedmetadata", updateDuration);
       video.removeEventListener("durationchange", updateDuration);
-      video.removeEventListener("canplay", handleCanPlay);
     };
   }, []);
 
@@ -106,6 +108,7 @@ export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
         }
       }
       setIsPlaying((prev) => !prev);
+      setIsEnded(false); // Reset isEnded when toggling play
     }
   }, [isPlaying]);
 
@@ -137,6 +140,15 @@ export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
       }
     }
     setIsFullscreen(!isFullscreen);
+  };
+
+  const handleReplay = () => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play();
+      setIsPlaying(true);
+      setIsEnded(false);
+    }
   };
 
   const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -179,6 +191,23 @@ export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
     };
   }, []);
 
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handleEnded = () => {
+      setIsPlaying(false);
+      setIsEnded(true); // Set isEnded to true when video ends
+      setShowControls(true);
+    };
+
+    video.addEventListener("ended", handleEnded);
+
+    return () => {
+      video.removeEventListener("ended", handleEnded);
+    };
+  }, []);
+
   return (
     <div
       ref={playerRef}
@@ -189,17 +218,14 @@ export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
     >
       <video
         ref={videoRef}
-        src={src}
         className="w-full h-full"
         onClick={togglePlay}
         playsInline
         preload="metadata"
-      />
-      {!isLoaded && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black">
-          <div className="text-white text-lg">Loading...</div>
-        </div>
-      )}
+        controls
+      >
+        <source src={src} type="video/mp4" />
+      </video>
       <div
         className={cn(
           "absolute inset-0 bg-gradient-to-t from-black/70 to-transparent transition-opacity duration-300",
@@ -212,10 +238,22 @@ export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
         <div className="absolute inset-0 flex items-center justify-center">
           <button
             onClick={togglePlay}
-            className="bg-white/10 hover:bg-white/20 text-white rounded-full p-4 transition-colors"
-            aria-label="Play video"
+            className="bg-white/10 hover:bg-white/50 backdrop-blur-sm text-white rounded-lg p-8 transition-colors"
+            aaria-label={
+              isEnded
+                ? "Replay video"
+                : isPlaying
+                ? "Pause video"
+                : "Play video"
+            }
           >
-            {isPlaying ? <Pause size={24} /> : <Play size={24} />}
+            {isEnded ? (
+              <Repeat size={30} />
+            ) : isPlaying ? (
+              <Pause size={30} />
+            ) : (
+              <Play size={30} />
+            )}
           </button>
         </div>
 
@@ -232,11 +270,23 @@ export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <button
-                onClick={togglePlay}
+                onClick={isEnded ? handleReplay : togglePlay}
                 className="text-white hover:text-white/80 transition-colors"
-                aria-label={isPlaying ? "Pause video" : "Play video"}
+                aria-label={
+                  isEnded
+                    ? "Replay video"
+                    : isPlaying
+                    ? "Pause video"
+                    : "Play video"
+                }
               >
-                {isPlaying ? <Pause size={24} /> : <Play size={24} />}
+                {isEnded ? (
+                  <Repeat size={24} />
+                ) : isPlaying ? (
+                  <Pause size={24} />
+                ) : (
+                  <Play size={24} />
+                )}
               </button>
               <div className="flex items-center space-x-2">
                 <button
@@ -276,4 +326,3 @@ export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
     </div>
   );
 }
-
