@@ -1,26 +1,26 @@
 "use client";
 
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import {
-  Play,
-  Pause,
-  Volume2,
-  VolumeX,
-  Maximize,
-  Minimize,
-  Repeat,
-} from "lucide-react";
+import { Play, Pause, Volume2, VolumeX, Maximize, Minimize, Repeat } from 'lucide-react';
 import { cn } from "@/lib/cn";
 import { Slider } from "@/components/ui/slider";
-import { useMediaQuery } from "react-responsive";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 interface VideoPlayerProps {
   src: string;
   className?: string;
   title: string;
+  qualityOptions: { label: string; src: string }[];
 }
 
-export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
+export function VideoPlayer({ src, className, title, qualityOptions }: VideoPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -29,11 +29,11 @@ export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
   const [duration, setDuration] = useState<number | null>(null);
   const [currentTime, setCurrentTime] = useState(0);
   const [showControls, setShowControls] = useState(true);
-  const [isEnded, setIsEnded] = useState(false); // Added state for video end
+  const [isEnded, setIsEnded] = useState(false);
+  const [selectedQuality, setSelectedQuality] = useState(qualityOptions[0].label);
   const videoRef = useRef<HTMLVideoElement>(null);
   const playerRef = useRef<HTMLDivElement>(null);
   const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const isMobile = useMediaQuery({ maxWidth: 767 });
 
   useEffect(() => {
     const video = videoRef.current;
@@ -110,7 +110,7 @@ export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
         }
       }
       setIsPlaying((prev) => !prev);
-      setIsEnded(false); // Reset isEnded when toggling play
+      setIsEnded(false);
     }
   }, [isPlaying]);
 
@@ -132,16 +132,25 @@ export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
   const toggleFullscreen = () => {
     if (!playerRef.current) return;
 
-    if (!isFullscreen) {
+    if (!document.fullscreenElement) {
       if (playerRef.current.requestFullscreen) {
         playerRef.current.requestFullscreen();
+      } else if ((playerRef.current as any).webkitRequestFullscreen) {
+        (playerRef.current as any).webkitRequestFullscreen();
+      } else if ((playerRef.current as any).msRequestFullscreen) {
+        (playerRef.current as any).msRequestFullscreen();
       }
+      setIsFullscreen(true);
     } else {
       if (document.exitFullscreen) {
         document.exitFullscreen();
+      } else if ((document as any).webkitExitFullscreen) {
+        (document as any).webkitExitFullscreen();
+      } else if ((document as any).msExitFullscreen) {
+        (document as any).msExitFullscreen();
       }
+      setIsFullscreen(false);
     }
-    setIsFullscreen(!isFullscreen);
   };
 
   const handleReplay = () => {
@@ -199,7 +208,7 @@ export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
 
     const handleEnded = () => {
       setIsPlaying(false);
-      setIsEnded(true); // Set isEnded to true when video ends
+      setIsEnded(true);
       setShowControls(true);
     };
 
@@ -210,26 +219,24 @@ export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
     };
   }, []);
 
+  const handleQualityChange = (quality: string) => {
+    const selectedOption = qualityOptions.find((option) => option.label === quality);
+    if (selectedOption && videoRef.current) {
+      const currentTime = videoRef.current.currentTime;
+      videoRef.current.src = selectedOption.src;
+      videoRef.current.currentTime = currentTime;
+      videoRef.current.play();
+      setSelectedQuality(quality);
+    }
+  };
+
   return (
     <div className="relative w-full xl:h-[89dvh] aspect-video">
-      <video
-        ref={videoRef}
-        className="w-full h-full sm:hidden"
-        onClick={togglePlay}
-        playsInline
-        preload="metadata"
-        controls
-      >
-        <source src={src} type="video/mp4" />
-      </video>
-      <div
-        ref={playerRef}
-        className={cn(" bg-black hidden sm:block", className)}
-      >
+      <div ref={playerRef} className={cn("bg-black", className)}>
         <video
           ref={videoRef}
-          src={src}
-          className="w-full h-full"
+          src={qualityOptions.find((option) => option.label === selectedQuality)?.src}
+          className="absolute w-full h-full"
           onClick={togglePlay}
           playsInline
           preload="metadata"
@@ -246,8 +253,8 @@ export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
           <div className="absolute inset-0 flex items-center justify-center">
             <button
               onClick={togglePlay}
-              className="bg-white/10 hover:bg-white/50 backdrop-blur-sm text-white rounded-lg p-8 transition-colors"
-              aaria-label={
+              className="bg-white/10 hover:bg-white/30 backdrop-blur-sm text-white rounded-full p-8 transition-colors"
+              aria-label={
                 isEnded
                   ? "Replay video"
                   : isPlaying
@@ -318,6 +325,24 @@ export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
                 </div>
               </div>
               <div className="flex items-center space-x-4">
+                <Select value={selectedQuality} onValueChange={handleQualityChange}>
+                  <SelectTrigger className="w-[100px] bg-black/50 text-white border-none focus:ring-0">
+                    <SelectValue>
+                      {selectedQuality}
+                      {selectedQuality === '2160p' && <span className="ml-1 text-xs font-semibold text-[#fcaf17]">4K</span>}
+                      {(selectedQuality === '1080p' || selectedQuality === '720p') && <span className="ml-1 text-xs font-semibold text-green-400">HD</span>}
+                    </SelectValue>
+                  </SelectTrigger>
+                  <SelectContent className="bg-black/90 text-white border-none">
+                    {qualityOptions.map((option) => (
+                      <SelectItem key={option.label} value={option.label} className="flex items-center justify-between">
+                        <span>{option.label}</span>
+                        {option.label === '2160p' && <span className="text-xs font-semibold text-[#fcaf17]">4K</span>}
+                        {(option.label === '1080p' || option.label === '720p') && <span className="text-xs font-semibold text-green-400">HD</span>}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
                 <button
                   onClick={toggleFullscreen}
                   className="text-white hover:text-white/80 transition-colors"
@@ -339,3 +364,6 @@ export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
     </div>
   );
 }
+
+export default VideoPlayer;
+
