@@ -157,7 +157,7 @@ export function SiteHeader() {
               </CommandList>
             </Command>
           </CommandDialog>
-          {isMobile ? (
+          {/* {isMobile ? (
             <Drawer open={userMenuOpen} onOpenChange={setUserMenuOpen}>
               <DrawerTrigger asChild>
                 <Button
@@ -239,7 +239,7 @@ export function SiteHeader() {
                 </DropdownMenuSub>
               </DropdownMenuContent>
             </DropdownMenu>
-          )}
+          )} */}
           <Button className="hidden lg:inline-flex bg-[#fcaf17] text-black hover:bg-[#fcaf17]/90">
             GET IT NOW
           </Button>

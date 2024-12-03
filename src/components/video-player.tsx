@@ -211,25 +211,21 @@ export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
   }, []);
 
   return (
-    <div
-      ref={playerRef}
-      className={cn(
-        "relative w-full xl:h-[89dvh] aspect-video bg-black",
-        className
-      )}
-    >
-      {isMobile ? (
-        <video
-          ref={videoRef}
-          className="w-full h-full"
-          onClick={togglePlay}
-          playsInline
-          preload="metadata"
-          controls
-        >
-          <source src={src} type="video/mp4" />
-        </video>
-      ) : (
+    <div className="relative w-full xl:h-[89dvh] aspect-video">
+      <video
+        ref={videoRef}
+        className="w-full h-full sm:hidden"
+        onClick={togglePlay}
+        playsInline
+        preload="metadata"
+        controls
+      >
+        <source src={src} type="video/mp4" />
+      </video>
+      <div
+        ref={playerRef}
+        className={cn(" bg-black hidden sm:block", className)}
+      >
         <video
           ref={videoRef}
           src={src}
@@ -238,100 +234,104 @@ export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
           playsInline
           preload="metadata"
         />
-      )}
-      <div
-        className={cn(
-          "absolute inset-0 bg-gradient-to-t from-black/70 to-transparent transition-opacity duration-300",
-          showControls ? "opacity-100" : "opacity-0"
-        )}
-      >
-        <div className="absolute top-0 left-0 right-0 p-4">
-          <h1 className="text-lg text-white">{title}</h1>
-        </div>
-        <div className="absolute inset-0 flex items-center justify-center">
-          <button
-            onClick={togglePlay}
-            className="bg-white/10 hover:bg-white/50 backdrop-blur-sm text-white rounded-lg p-8 transition-colors"
-            aaria-label={
-              isEnded
-                ? "Replay video"
-                : isPlaying
-                ? "Pause video"
-                : "Play video"
-            }
-          >
-            {isEnded ? (
-              <Repeat size={30} />
-            ) : isPlaying ? (
-              <Pause size={30} />
-            ) : (
-              <Play size={30} />
-            )}
-          </button>
-        </div>
-
-        <div className="absolute bottom-0 left-0 right-0 px-4 pb-4">
-          <div
-            className="mb-3.5 h-1 bg-white/30 cursor-pointer"
-            onClick={handleProgressClick}
-          >
-            <div
-              className="h-full bg-[#fcaf17]"
-              style={{ width: `${progress}%` }}
-            />
+        <div
+          className={cn(
+            "absolute inset-0 bg-gradient-to-t from-black/70 to-transparent transition-opacity duration-300",
+            showControls ? "opacity-100" : "opacity-0"
+          )}
+        >
+          <div className="absolute top-0 left-0 right-0 p-4">
+            <h1 className="text-lg text-white">{title}</h1>
           </div>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={isEnded ? handleReplay : togglePlay}
-                className="text-white hover:text-white/80 transition-colors"
-                aria-label={
-                  isEnded
-                    ? "Replay video"
-                    : isPlaying
-                    ? "Pause video"
-                    : "Play video"
-                }
-              >
-                {isEnded ? (
-                  <Repeat size={24} />
-                ) : isPlaying ? (
-                  <Pause size={24} />
-                ) : (
-                  <Play size={24} />
-                )}
-              </button>
-              <div className="flex items-center space-x-2">
-                <button
-                  onClick={toggleMute}
-                  className="text-white hover:text-white/80 transition-colors"
-                  aria-label={isMuted ? "Unmute" : "Mute"}
-                >
-                  {isMuted ? <VolumeX size={24} /> : <Volume2 size={24} />}
-                </button>
-                <Slider
-                  value={[volume]}
-                  max={1}
-                  step={0.01}
-                  onValueChange={(value) => handleVolumeChange(value[0])}
-                  className="w-24"
-                />
-              </div>
-              <div className="text-white text-sm">
-                {formatTime(currentTime)} /{" "}
-                {duration && duration > 0 ? formatTime(duration) : "--:--"}
-              </div>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <button
+              onClick={togglePlay}
+              className="bg-white/10 hover:bg-white/50 backdrop-blur-sm text-white rounded-lg p-8 transition-colors"
+              aaria-label={
+                isEnded
+                  ? "Replay video"
+                  : isPlaying
+                  ? "Pause video"
+                  : "Play video"
+              }
+            >
+              {isEnded ? (
+                <Repeat size={30} />
+              ) : isPlaying ? (
+                <Pause size={30} />
+              ) : (
+                <Play size={30} />
+              )}
+            </button>
+          </div>
+
+          <div className="absolute bottom-0 left-0 right-0 px-4 pb-4">
+            <div
+              className="mb-3.5 h-1 bg-white/30 cursor-pointer"
+              onClick={handleProgressClick}
+            >
+              <div
+                className="h-full bg-[#fcaf17]"
+                style={{ width: `${progress}%` }}
+              />
             </div>
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={toggleFullscreen}
-                className="text-white hover:text-white/80 transition-colors"
-                aria-label={
-                  isFullscreen ? "Exit fullscreen" : "Enter fullscreen"
-                }
-              >
-                {isFullscreen ? <Minimize size={24} /> : <Maximize size={24} />}
-              </button>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4">
+                <button
+                  onClick={isEnded ? handleReplay : togglePlay}
+                  className="text-white hover:text-white/80 transition-colors"
+                  aria-label={
+                    isEnded
+                      ? "Replay video"
+                      : isPlaying
+                      ? "Pause video"
+                      : "Play video"
+                  }
+                >
+                  {isEnded ? (
+                    <Repeat size={24} />
+                  ) : isPlaying ? (
+                    <Pause size={24} />
+                  ) : (
+                    <Play size={24} />
+                  )}
+                </button>
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={toggleMute}
+                    className="text-white hover:text-white/80 transition-colors"
+                    aria-label={isMuted ? "Unmute" : "Mute"}
+                  >
+                    {isMuted ? <VolumeX size={24} /> : <Volume2 size={24} />}
+                  </button>
+                  <Slider
+                    value={[volume]}
+                    max={1}
+                    step={0.01}
+                    onValueChange={(value) => handleVolumeChange(value[0])}
+                    className="w-24"
+                  />
+                </div>
+                <div className="text-white text-sm">
+                  {formatTime(currentTime)} /{" "}
+                  {duration && duration > 0 ? formatTime(duration) : "--:--"}
+                </div>
+              </div>
+              <div className="flex items-center space-x-4">
+                <button
+                  onClick={toggleFullscreen}
+                  className="text-white hover:text-white/80 transition-colors"
+                  aria-label={
+                    isFullscreen ? "Exit fullscreen" : "Enter fullscreen"
+                  }
+                >
+                  {isFullscreen ? (
+                    <Minimize size={24} />
+                  ) : (
+                    <Maximize size={24} />
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </div>
