@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { Slider } from "@/components/ui/slider";
+import { useMediaQuery } from "react-responsive";
 
 interface VideoPlayerProps {
   src: string;
@@ -32,6 +33,7 @@ export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const playerRef = useRef<HTMLDivElement>(null);
   const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const isMobile = useMediaQuery({ maxWidth: 767 });
 
   useEffect(() => {
     const video = videoRef.current;
@@ -216,16 +218,27 @@ export function VideoPlayer({ src, className, title }: VideoPlayerProps) {
         className
       )}
     >
-      <video
-        ref={videoRef}
-        className="w-full h-full"
-        onClick={togglePlay}
-        playsInline
-        preload="metadata"
-        controls
-      >
-        <source src={src} type="video/mp4" />
-      </video>
+      {isMobile ? (
+        <video
+          ref={videoRef}
+          className="w-full h-full"
+          onClick={togglePlay}
+          playsInline
+          preload="metadata"
+          controls
+        >
+          <source src={src} type="video/mp4" />
+        </video>
+      ) : (
+        <video
+          ref={videoRef}
+          src={src}
+          className="w-full h-full"
+          onClick={togglePlay}
+          playsInline
+          preload="metadata"
+        />
+      )}
       <div
         className={cn(
           "absolute inset-0 bg-gradient-to-t from-black/70 to-transparent transition-opacity duration-300",
