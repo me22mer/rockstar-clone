@@ -254,7 +254,6 @@ export function VideoPlayer({
           playsInline
           preload="metadata"
           controls={false}
-          autoPlay
         >
           <source
             src={
