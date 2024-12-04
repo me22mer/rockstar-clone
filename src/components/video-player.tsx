@@ -1,7 +1,15 @@
 "use client";
 
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { Play, Pause, Volume2, VolumeX, Maximize, Minimize, Repeat } from 'lucide-react';
+import {
+  Play,
+  Pause,
+  Volume2,
+  VolumeX,
+  Maximize,
+  Minimize,
+  Repeat,
+} from "lucide-react";
 import { cn } from "@/lib/cn";
 import { Slider } from "@/components/ui/slider";
 import {
@@ -10,7 +18,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 
 interface VideoPlayerProps {
   className?: string;
@@ -18,7 +26,11 @@ interface VideoPlayerProps {
   qualityOptions: { label: string; src: string }[];
 }
 
-export function VideoPlayer({ className, title, qualityOptions }: VideoPlayerProps) {
+export function VideoPlayer({
+  className,
+  title,
+  qualityOptions,
+}: VideoPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -28,7 +40,9 @@ export function VideoPlayer({ className, title, qualityOptions }: VideoPlayerPro
   const [currentTime, setCurrentTime] = useState(0);
   const [showControls, setShowControls] = useState(true);
   const [isEnded, setIsEnded] = useState(false);
-  const [selectedQuality, setSelectedQuality] = useState(qualityOptions[0].label);
+  const [selectedQuality, setSelectedQuality] = useState(
+    qualityOptions[0].label
+  );
   const videoRef = useRef<HTMLVideoElement>(null);
   const playerRef = useRef<HTMLDivElement>(null);
   const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -218,7 +232,9 @@ export function VideoPlayer({ className, title, qualityOptions }: VideoPlayerPro
   }, []);
 
   const handleQualityChange = (quality: string) => {
-    const selectedOption = qualityOptions.find((option) => option.label === quality);
+    const selectedOption = qualityOptions.find(
+      (option) => option.label === quality
+    );
     if (selectedOption && videoRef.current) {
       const currentTime = videoRef.current.currentTime;
       videoRef.current.src = selectedOption.src;
@@ -233,12 +249,20 @@ export function VideoPlayer({ className, title, qualityOptions }: VideoPlayerPro
       <div ref={playerRef} className={cn("bg-black", className)}>
         <video
           ref={videoRef}
-          src={qualityOptions.find((option) => option.label === selectedQuality)?.src}
-          className="absolute w-full h-full"
+          className="absolute w-full h-full bg-black"
           onClick={togglePlay}
           playsInline
-          preload="auto"
-        />
+          preload="metadata"
+          controls={false}
+        >
+          <source
+            src={
+              qualityOptions.find((option) => option.label === selectedQuality)
+                ?.src
+            }
+            type="video/mp4"
+          />
+        </video>
         <div
           className={cn(
             "absolute inset-0 bg-gradient-to-t from-black/70 to-transparent transition-opacity duration-300",
@@ -323,20 +347,41 @@ export function VideoPlayer({ className, title, qualityOptions }: VideoPlayerPro
                 </div>
               </div>
               <div className="flex items-center space-x-4">
-                <Select value={selectedQuality} onValueChange={handleQualityChange}>
+                <Select
+                  value={selectedQuality}
+                  onValueChange={handleQualityChange}
+                >
                   <SelectTrigger className="w-[100px] bg-black/50 text-white border-none focus:ring-0">
                     <SelectValue>
                       {selectedQuality}
-                      {selectedQuality === '2160p' && <span className="ml-1 text-xs font-semibold text-[#fcaf17]">4K</span>}
-                      {(selectedQuality === '1080p' || selectedQuality === '720p') && <span className="ml-1 text-xs font-semibold text-green-400">HD</span>}
+                      {selectedQuality === "2160p" && (
+                        <sup className="ml-1 text-xs font-semibold text-[#fcaf17]">
+                          4K
+                        </sup>
+                      )}
+                      {(selectedQuality === "1080p" ||
+                        selectedQuality === "720p") && (
+                        <sup className="ml-1 text-xs font-semibold text-green-400">
+                          HD
+                        </sup>
+                      )}
                     </SelectValue>
                   </SelectTrigger>
                   <SelectContent className="bg-black/90 text-white border-none">
                     {qualityOptions.map((option) => (
-                      <SelectItem key={option.label} value={option.label} className="flex items-center justify-between">
-                        <span>{option.label}</span>
-                        {option.label === '2160p' && <span className="text-xs font-semibold text-[#fcaf17]">4K</span>}
-                        {(option.label === '1080p' || option.label === '720p') && <span className="text-xs font-semibold text-green-400">HD</span>}
+                      <SelectItem
+                        key={option.label}
+                        value={option.label}
+                        className="flex items-center justify-between"
+                      >
+                        <sup>{option.label}</sup>
+                        {option.label === "2160p" && (
+                          <sup className="ml-1 text-xs text-[#fcaf17]">4K</sup>
+                        )}
+                        {(option.label === "1080p" ||
+                          option.label === "720p") && (
+                          <sup className="ml-1 text-xs text-green-400">HD</sup>
+                        )}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -364,4 +409,3 @@ export function VideoPlayer({ className, title, qualityOptions }: VideoPlayerPro
 }
 
 export default VideoPlayer;
-
