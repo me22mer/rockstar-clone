@@ -1,5 +1,4 @@
 import { VideoPlayer } from "@/components/video-player";
-import { notFound } from "next/navigation";
 
 const videos = {
   "gta-vi-trailer": {
@@ -10,10 +9,8 @@ const videos = {
       "Grand Theft Auto VI heads to the state of Leonida, home to the neon-soaked streets of Vice City and beyond in the biggest, most immersive evolution of the Grand Theft Auto series yet. Coming 2025 to PlayStation 5 and Xbox Series X|S.",
     publishDate: "December 5, 2023",
     qualityOptions: [
-      { label: "2160p", src: "/videos/GTAVI/Trailer-1-720p.mp4" },
-      { label: "1080p", src: "/videos/GTAVI/Trailer-1-720p.mp4" },
-      { label: "720p", src: "/videos/GTAVI/Trailer-1-720p.mp4" },
-      { label: "480p", src: "/videos/GTAVI/Trailer-1-720p.mp4" },
+      { label: "1440p", src: "https://gul2vtevtamla80v.public.blob.vercel-storage.com/videos/Trailer-1-1440p-SYE20A6ywihJoKogHtPitT0D0EYeap.mp4" },
+      { label: "720p", src: "https://gul2vtevtamla80v.public.blob.vercel-storage.com/videos/Trailer-1-720p-McyMzkzdPdX8JCJelc2yLrpbc6bhAh.mp4" },
     ],
   },
 };
