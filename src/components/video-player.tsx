@@ -9,6 +9,7 @@ import {
   Maximize,
   Minimize,
   Repeat,
+  Settings,
 } from "lucide-react";
 import { cn } from "@/lib/cn";
 import { Slider } from "@/components/ui/slider";
@@ -24,12 +25,15 @@ interface VideoPlayerProps {
   className?: string;
   title: string;
   qualityOptions: { label: string; src: string }[];
+  width?: number;
+  loop?: boolean;
 }
 
 export function VideoPlayer({
   className,
   title,
   qualityOptions,
+  loop = false,
 }: VideoPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
@@ -80,7 +84,7 @@ export function VideoPlayer({
     const player = playerRef.current;
     if (!player) return;
 
-    const handleMouseMove = () => {
+    const handleInteraction = () => {
       setShowControls(true);
       if (controlsTimeoutRef.current) {
         clearTimeout(controlsTimeoutRef.current);
@@ -90,19 +94,12 @@ export function VideoPlayer({
       }, 2500);
     };
 
-    const handleMouseLeave = () => {
-      if (controlsTimeoutRef.current) {
-        clearTimeout(controlsTimeoutRef.current);
-      }
-      setShowControls(false);
-    };
-
-    player.addEventListener("mousemove", handleMouseMove);
-    player.addEventListener("mouseleave", handleMouseLeave);
+    player.addEventListener("mousemove", handleInteraction);
+    player.addEventListener("touchstart", handleInteraction);
 
     return () => {
-      player.removeEventListener("mousemove", handleMouseMove);
-      player.removeEventListener("mouseleave", handleMouseLeave);
+      player.removeEventListener("mousemove", handleInteraction);
+      player.removeEventListener("touchstart", handleInteraction);
       if (controlsTimeoutRef.current) {
         clearTimeout(controlsTimeoutRef.current);
       }
@@ -117,7 +114,11 @@ export function VideoPlayer({
         const playPromise = videoRef.current.play();
         if (playPromise !== undefined) {
           playPromise.catch((error) => {
-            console.error("Playback was prevented:", error);
+            if (error.name === "NotAllowedError") {
+              console.log("Autoplay prevented. User interaction required.");
+            } else {
+              console.error("Playback was prevented:", error);
+            }
           });
         }
       }
@@ -197,27 +198,6 @@ export function VideoPlayer({
     const video = videoRef.current;
     if (!video) return;
 
-    const handleTouchStart = () => {
-      setShowControls(true);
-      if (controlsTimeoutRef.current) {
-        clearTimeout(controlsTimeoutRef.current);
-      }
-      controlsTimeoutRef.current = setTimeout(() => {
-        setShowControls(false);
-      }, 2500);
-    };
-
-    video.addEventListener("touchstart", handleTouchStart);
-
-    return () => {
-      video.removeEventListener("touchstart", handleTouchStart);
-    };
-  }, []);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
     const handleEnded = () => {
       setIsPlaying(false);
       setIsEnded(true);
@@ -237,10 +217,13 @@ export function VideoPlayer({
     );
     if (selectedOption && videoRef.current) {
       const currentTime = videoRef.current.currentTime;
+      const wasPlaying = !videoRef.current.paused;
       videoRef.current.src = selectedOption.src;
       videoRef.current.currentTime = currentTime;
-      videoRef.current.play();
       setSelectedQuality(quality);
+      if (wasPlaying) {
+        videoRef.current.play();
+      }
     }
   };
 
@@ -252,8 +235,11 @@ export function VideoPlayer({
           className="absolute w-full h-full bg-black"
           onClick={togglePlay}
           playsInline
+          webkit-playsinline="true"
+          x-webkit-airplay="allow"
           preload="metadata"
-          controls={false}
+          muted={isMuted}
+          loop={loop}
         >
           <source
             src={
@@ -263,6 +249,7 @@ export function VideoPlayer({
             type="video/mp4"
           />
         </video>
+
         <div
           className={cn(
             "absolute inset-0 bg-gradient-to-t from-black/70 to-transparent transition-opacity duration-300",
@@ -300,50 +287,47 @@ export function VideoPlayer({
               onClick={handleProgressClick}
             >
               <div
-                className="h-full bg-[#fcaf17]"
+                className="h-full bg-white"
                 style={{ width: `${progress}%` }}
               />
             </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
+
+            <div className="flex items-center justify-between space-x-3">
+              <div className="flex items-center space-x-3">
                 <button
-                  onClick={isEnded ? handleReplay : togglePlay}
-                  className="text-white hover:text-white/80 transition-colors"
-                  aria-label={
-                    isEnded
-                      ? "Replay video"
-                      : isPlaying
-                      ? "Pause video"
-                      : "Play video"
-                  }
+                  onClick={togglePlay}
+                  className="bg-white/10 hover:bg-white/30 backdrop-blur-sm text-white rounded-full p-1.5 sm:p-3 transition-colors"
+                  aria-label={isPlaying ? "Pause video" : "Play video"}
                 >
-                  {isEnded ? (
-                    <Repeat size={24} />
-                  ) : isPlaying ? (
-                    <Pause size={24} />
+                  {isPlaying ? (
+                    <Pause size={20} />
                   ) : (
-                    <Play size={24} />
+                    <Play size={20} />
                   )}
                 </button>
                 <div className="flex items-center space-x-2">
                   <button
                     onClick={toggleMute}
-                    className="text-white hover:text-white/80 transition-colors"
-                    aria-label={isMuted ? "Unmute" : "Mute"}
+                    className="bg-white/10 hover:bg-white/30 backdrop-blur-sm text-white rounded-full p-1.5 sm:p-3 transition-colors"
+                    aria-label={isMuted ? "Unmute video" : "Mute video"}
                   >
-                    {isMuted ? <VolumeX size={24} /> : <Volume2 size={24} />}
+                    {isMuted ? (
+                      <VolumeX size={20} />
+                    ) : (
+                      <Volume2 size={20} />
+                    )}
                   </button>
                   <Slider
                     value={[volume]}
+                    onValueChange={(value) => handleVolumeChange(value[0])}
                     max={1}
                     step={0.01}
-                    onValueChange={(value) => handleVolumeChange(value[0])}
-                    className="w-24 hidden sm:flex"
+                    aria-label="Volume"
+                    className="relative hidden sm:flex w-16 h-1 cursor-pointer bg-white/30 rounded-full"
                   />
                 </div>
-                <div className="text-white text-sm">
-                  {formatTime(currentTime)} /{" "}
-                  {duration && duration > 0 ? formatTime(duration) : "--:--"}
+                <div className="text-white text-xs">
+                  {formatTime(currentTime)} / {formatTime(duration)}
                 </div>
               </div>
               <div className="flex items-center space-x-4">
@@ -351,35 +335,18 @@ export function VideoPlayer({
                   value={selectedQuality}
                   onValueChange={handleQualityChange}
                 >
-                  <SelectTrigger className="w-[100px] bg-black/50 text-white border-none focus:ring-0">
-                    <SelectValue>
-                      {selectedQuality}
-                      {selectedQuality === "2160p" && (
-                        <sup className="ml-1 text-xs font-semibold text-[#fcaf17]">
-                          4K
-                        </sup>
-                      )}
-                      {(selectedQuality === "1080p" ||
-                        selectedQuality === "720p") && (
-                        <sup className="ml-1 text-xs font-semibold text-green-400">
-                          HD
-                        </sup>
-                      )}
-                    </SelectValue>
+                  <SelectTrigger className="w-max bg-black/50 text-white border-none focus:ring-0">
+                    <SelectValue placeholder="Quality" />
                   </SelectTrigger>
-                  <SelectContent className="bg-black/90 text-white border-none">
+                  <SelectContent className="bg-black/90 text-white border-none z-50">
                     {qualityOptions.map((option) => (
-                      <SelectItem
-                        key={option.label}
-                        value={option.label}
-                        className="flex items-center justify-between"
-                      >
-                        <sup>{option.label}</sup>
+                      <SelectItem key={option.label} value={option.label}>
+                        {option.label}
                         {option.label === "2160p" && (
                           <sup className="ml-1 text-xs text-[#fcaf17]">4K</sup>
                         )}
-                        {(option.label === "1080p" ||
-                          option.label === "720p") && (
+                        {(option.label === "1440p" ||
+                          option.label === "1080p") && (
                           <sup className="ml-1 text-xs text-green-400">HD</sup>
                         )}
                       </SelectItem>
@@ -388,15 +355,13 @@ export function VideoPlayer({
                 </Select>
                 <button
                   onClick={toggleFullscreen}
-                  className="text-white hover:text-white/80 transition-colors"
-                  aria-label={
-                    isFullscreen ? "Exit fullscreen" : "Enter fullscreen"
-                  }
+                  className="bg-white/10 hover:bg-white/30 backdrop-blur-sm text-white rounded-full p-1.5 sm:p-3 transition-colors"
+                  aria-label="Toggle fullscreen"
                 >
                   {isFullscreen ? (
-                    <Minimize size={24} />
+                    <Minimize size={20} />
                   ) : (
-                    <Maximize size={24} />
+                    <Maximize size={20} />
                   )}
                 </button>
               </div>
@@ -407,5 +372,3 @@ export function VideoPlayer({
     </div>
   );
 }
-
-export default VideoPlayer;
