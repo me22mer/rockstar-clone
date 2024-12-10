@@ -17,7 +17,7 @@ export default function RootLayout({
         <body
           className={`${inter.className} bg-black scroll-smooth antialiased overflow-x-hidden`}
         >
-          <SiteHeader />
+          {/* <SiteHeader /> */}
           {children}
           <SiteFooter />
         </body>

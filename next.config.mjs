@@ -4,24 +4,11 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "videos-rockstargames-com.akamaized.net", // Add this hostname
+        hostname: "videos-rockstargames-com.akamaized.net",
         port: "",
-        pathname: "/**", // Allow any path from this hostname
+        pathname: "/**", 
       },
     ],
-  },
-  async headers() {
-    return [
-      {
-        source: "/:path*",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "no-store",
-          },
-        ],
-      },
-    ];
   },
 };
 
